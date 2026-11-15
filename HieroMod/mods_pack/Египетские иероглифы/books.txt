@@ -1,0 +1,6 @@
+player.additem 0F000800 1
+player.additem 0F000801 1
+player.additem 0F000802 1
+player.additem 0F000803 1
+player.additem 0F000804 1
+player.additem 0F000805 1

@@ -1,0 +1,22 @@
+/* Карта: сфера, легенда, чёрная дыра, пустая заставка. Палитра и основа — из site.css. */
+#map { touch-action: none; cursor: grab; }
+
+/* легенда над строкой состояния; не заходит под чёрную дыру */
+#legend { bottom: 36px; max-width: calc(100vw - 120px); row-gap: 6px; align-items: center; }
+#legend > span { white-space: nowrap; }
+#legend .cd-bridge-note { border-left: 1px solid var(--border); padding-left: 12px; }
+
+/* чёрная дыра — над строкой состояния */
+#blackHole { bottom: 38px; right: 22px; }
+
+/* пустая карта: заставка ниже шапки */
+#empty { padding: 70px 20px 40px; }
+#empty .big { font-size: clamp(26px, 6vw, 38px); }
+
+@media (max-width: 760px) {
+  #legend { left: 8px; bottom: 32px; gap: 8px; padding: 7px 10px; font-size: 11.5px;
+    max-width: calc(100vw - 84px); }
+  #legend #linksEye { padding: 4px 10px; }
+  #blackHole { width: 48px; height: 48px; right: 12px; bottom: 34px; }
+  #blackHole .bh-core { inset: 11px; }
+}

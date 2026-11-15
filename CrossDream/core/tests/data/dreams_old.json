@@ -1,0 +1,40 @@
+[
+  {
+    "Id": "d638650000000000001",
+    "Title": "Тёмный лес",
+    "Date": "2026-03-01",
+    "Text": "Я шёл через лес, и деревья шептали.",
+    "Analysis": {
+      "Summary": "Путь через лес к реке.",
+      "Location": "Тёмный лес",
+      "Characters": ["я", "старик"],
+      "Emotions": ["тревога"],
+      "Symbols": ["река"],
+      "Motifs": ["путь"]
+    },
+    "ImagePrompt": "dark forest, mist",
+    "ImageFile": "3f2a9c0d1e2b4a5c6d7e8f9012345678.jpg",
+    "Links": [
+      { "Id": "web42", "Type": "локация", "Reason": "та же локация — Тёмный лес" }
+    ],
+    "PosX": 0.25,
+    "PosY": -0.5,
+    "PosZ": 1.0,
+    "PosTime": "2026-03-02 10:00:00",
+    "Mood": "старое поле, которого нет в программе"
+  },
+  {
+    "Id": "web42",
+    "Title": null,
+    "Date": "2026-02-14",
+    "Text": "Снова лес.",
+    "Analysis": null,
+    "ImagePrompt": null,
+    "ImageFile": "",
+    "Links": null,
+    "PosX": null,
+    "PosY": null,
+    "PosZ": null,
+    "PosTime": null
+  }
+]

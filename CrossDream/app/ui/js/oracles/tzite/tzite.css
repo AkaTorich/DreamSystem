@@ -1,0 +1,83 @@
+/* Цитэ: нефрит и киноварь на тёмно-зелёном — как в старом окне DreamMap */
+.oracle-win.tzite {
+  --o-bg: #071310; --o-fg: #2FD6A6; --o-muted: #8FC7B0; --o-border: #1E5C48; --o-ants: #2FD6A6;
+  --o-btn-border: #2FD6A6; --o-btn-hover: #122C24; --o-font: Consolas, 'Cascadia Mono', monospace;
+  --tz-jade: #2FD6A6; --tz-cinnabar: #E34234; --tz-panel: #0A1A15; --tz-dim: #4E9C80;
+}
+.oracle-win.tzite .oracle-bar { background: var(--tz-panel); }
+.oracle-win.tzite .oracle-bar .ob-sub { color: var(--tz-dim); opacity: 1; }
+.oracle-win.tzite .oracle-bar .ob-btns button:hover { background: #122C24; color: var(--tz-cinnabar); }
+
+.tz-main { display: flex; flex-direction: column; gap: 10px; height: 100%; min-height: 0; }
+.oracle-win .tz-panel { background: var(--tz-panel); border-color: var(--o-border); }
+
+/* ряд ввода: день сна, вопрос, кнопка */
+.tz-input { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 0; flex: 0 0 auto; }
+.tz-field { display: flex; align-items: center; min-width: 0; }
+.tz-field-date { flex: 0 0 auto; }
+.tz-field-ask { flex: 1 1 220px; }
+.tz-label { color: var(--o-muted); font-size: 12px; margin-right: 8px; white-space: nowrap; }
+.tz-label-ask { margin-left: 16px; }
+.oracle-win.tzite .tz-input input {
+  background: #061210; color: var(--tz-jade); caret-color: var(--tz-jade);
+  border: 1px solid var(--o-border); padding: 4px 6px; font-size: 14px; min-width: 0;
+}
+.oracle-win.tzite .tz-input .tz-date { width: 150px; color-scheme: dark; }
+.oracle-win.tzite .tz-input .tz-ask { flex: 1; width: 100%; }
+.oracle-win.tzite .tz-input input:focus { outline: none; border-color: var(--tz-jade); }
+
+/* кнопка: нефрит, при наведении пульс нефрит ↔ киноварь и киноварное свечение */
+.oracle-win.tzite .tz-btn {
+  margin-left: 12px; color: var(--tz-jade); background: #0C231C; border: 1px solid var(--tz-jade);
+  border-radius: 2px; padding: 5px 10px; font-size: 15px; cursor: pointer; white-space: nowrap;
+}
+.oracle-win.tzite .tz-btn:hover {
+  background: #103026; border-color: var(--tz-cinnabar);
+  box-shadow: 0 0 0 2px rgba(227, 66, 52, .45);
+  animation: tzPulse .7s ease-in-out infinite alternate;
+}
+.oracle-win.tzite .tz-btn:active { background: #081813; border-color: var(--tz-jade); animation: none; }
+@keyframes tzPulse {
+  from { border-color: #2FD6A6; box-shadow: 0 0 0 2px rgba(227, 66, 52, 0); }
+  to { border-color: #E34234; box-shadow: 0 0 0 2px rgba(227, 66, 52, .45); }
+}
+
+/* день сна и день-ответ — две равные колонки */
+.oracle-win .tz-days { display: flex; gap: 0 14px; padding: 14px; flex: 0 0 auto; }
+.tz-daycol { flex: 1 1 0; min-width: 0; }
+.tz-cap { color: var(--tz-dim); font-size: 11px; }
+.tz-name { font-size: 26px; overflow-wrap: anywhere; }
+.tz-name-day { color: var(--tz-jade); }
+.tz-name-ans { color: var(--tz-cinnabar); }
+.tz-ru { color: var(--o-muted); font-size: 13px; margin-top: 2px; white-space: pre-wrap; }
+
+/* горсть: кучки по четыре семени, остаток нефритом */
+.oracle-win .tz-seedpanel { padding: 12px; flex: 0 0 auto; }
+.tz-hand { white-space: pre-wrap; }
+.tz-seeds { display: flex; flex-wrap: wrap; margin-top: 8px; }
+.tz-seeds:empty { margin-top: 0; }
+.tz-pile { display: flex; margin: 0 12px 8px 0; }
+.tz-seed {
+  width: 11px; height: 11px; margin: 1px; border-radius: 50%; box-sizing: border-box;
+  background: #E34234; border: 1px solid #7A1F17;
+}
+.tz-seed.tz-rest { background: #2FD6A6; }
+
+/* ответ */
+.oracle-win .tz-read { flex: 1 1 auto; min-height: 140px; overflow: auto; padding: 14px; }
+.oracle-win .tz-reading { color: var(--o-muted); font-size: 14px; line-height: 24px; }
+
+/* узкое окно и телефон: поля друг под другом, дни один под другим */
+@media (max-width: 760px) {
+  .tz-main { height: auto; }
+  .oracle-win .tz-read { flex: 0 0 auto; overflow: visible; }
+}
+@media (max-width: 560px) {
+  .tz-field, .tz-field-ask { flex: 1 1 100%; }
+  .tz-label { width: 76px; }
+  .tz-label-ask { margin-left: 0; }
+  .oracle-win.tzite .tz-input .tz-date { flex: 1; width: auto; }
+  .oracle-win.tzite .tz-btn { margin-left: 0; width: 100%; padding: 8px 10px; }
+  .oracle-win .tz-days { flex-direction: column; gap: 12px; padding: 10px; }
+  .tz-name { font-size: 22px; }
+}

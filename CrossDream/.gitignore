@@ -1,0 +1,21 @@
+# Сборки
+target/
+app/gen/android/app/build/
+app/gen/android/.gradle/
+app/gen/android/app/src/main/jniLibs/
+app/gen/apple/build/
+*.apk
+*.aab
+*.exe
+*.msi
+
+# Ключи подписи Android — только на этой машине
+android-keystore/
+app/gen/android/keystore.properties
+
+# готовые сборки с GitHub (скачиваются в builds\)
+builds/
+
+# собранное руководство — собирается из docs\Руководство.html
+docs/*.pdf
+web-dist/

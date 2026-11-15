@@ -1,0 +1,21 @@
+[workspace]
+resolver = "2"
+members = ["core", "app"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+# отладочная сборка: свой код без оптимизации (быстро собирается), а чужие библиотеки — с ней,
+# иначе шифрование PDF в отладке в сотни раз медленнее настоящего
+[profile.dev.package."*"]
+opt-level = 2
+# ядро тоже: шифр — обобщённый код и собирается внутри ядра, без оптимизации он в сотни раз медленнее
+[profile.dev.package.dream-core]
+opt-level = 2
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+strip = true

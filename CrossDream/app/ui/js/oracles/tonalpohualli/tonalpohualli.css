@@ -1,0 +1,78 @@
+/* Тональпоуалли: бирюза, золото и тёмная охра — как в старом окне DreamMap */
+.oracle-win.tonalpohualli {
+  --o-bg: #0D0B08; --o-fg: #45E0C8; --o-muted: #C9A86A; --o-border: #5C4A1A; --o-ants: #F2B33D;
+  --o-btn-border: #F2B33D; --o-btn-hover: #2A1E10; --o-font: Consolas, 'Cascadia Mono', monospace;
+  --tp-gold: #F2B33D; --tp-turq: #45E0C8; --tp-panel: #120E0A; --tp-dim: #8C6A3A;
+}
+.oracle-win.tonalpohualli .oracle-bar { background: var(--tp-panel); }
+.oracle-win.tonalpohualli .oracle-bar .ob-sub { color: var(--tp-dim); opacity: 1; }
+.oracle-win.tonalpohualli .oracle-bar .ob-btns button:hover { background: #2A1E10; color: var(--tp-turq); }
+
+.tp-main { display: flex; flex-direction: column; gap: 10px; height: 100%; min-height: 0; }
+.oracle-win .tp-panel { background: var(--tp-panel); border-color: var(--o-border); }
+
+/* ряд ввода: день сна, образ, кнопка */
+.tp-input { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 0; flex: 0 0 auto; }
+.tp-field { display: flex; align-items: center; min-width: 0; }
+.tp-field-date { flex: 0 0 auto; }
+.tp-field-image { flex: 1 1 220px; }
+.tp-label { color: var(--o-muted); font-size: 12px; margin-right: 8px; white-space: nowrap; }
+.tp-label-image { margin-left: 16px; }
+.oracle-win.tonalpohualli .tp-input input {
+  background: #0A0806; color: var(--tp-turq); caret-color: var(--tp-turq);
+  border: 1px solid var(--o-border); padding: 4px 6px; font-size: 14px; min-width: 0;
+}
+.oracle-win.tonalpohualli .tp-input .tp-date { width: 150px; color-scheme: dark; }
+.oracle-win.tonalpohualli .tp-input .tp-image { flex: 1; width: 100%; }
+.oracle-win.tonalpohualli .tp-input input:focus { outline: none; border-color: var(--tp-turq); }
+
+/* кнопка: золото, при наведении пульс золото ↔ бирюза и бирюзовое свечение */
+.oracle-win.tonalpohualli .tp-btn {
+  margin-left: 12px; color: var(--tp-gold); background: #1B140C; border: 1px solid var(--tp-gold);
+  border-radius: 2px; padding: 5px 10px; font-size: 15px; cursor: pointer; white-space: nowrap;
+}
+.oracle-win.tonalpohualli .tp-btn:hover {
+  background: #241A0F; border-color: var(--tp-turq);
+  box-shadow: 0 0 0 2px rgba(69, 224, 200, .45);
+  animation: tpPulse .7s ease-in-out infinite alternate;
+}
+.oracle-win.tonalpohualli .tp-btn:active { background: #15100A; border-color: var(--tp-gold); animation: none; }
+@keyframes tpPulse {
+  from { border-color: #F2B33D; box-shadow: 0 0 0 2px rgba(69, 224, 200, 0); }
+  to { border-color: #45E0C8; box-shadow: 0 0 0 2px rgba(69, 224, 200, .45); }
+}
+
+/* клетка календаря */
+.oracle-win .tp-cell { display: flex; padding: 14px; flex: 0 0 auto; }
+.tp-numcol { flex: 0 0 auto; margin-right: 18px; display: flex; flex-direction: column; align-items: center; }
+.tp-num { color: var(--tp-gold); font-size: 52px; font-weight: bold; line-height: 1.2; }
+.tp-dots { width: 92px; display: flex; flex-wrap: wrap; margin-top: 2px; }
+.tp-dot {
+  width: 12px; height: 12px; margin: 2px; border-radius: 50%; box-sizing: border-box;
+  background: #45E0C8; border: 1px solid #F2B33D;
+}
+.tp-signcol { flex: 1; min-width: 0; }
+.tp-sign { color: var(--tp-turq); font-size: 26px; overflow-wrap: anywhere; }
+.tp-sign-ru { color: var(--o-muted); font-size: 14px; margin-top: 2px; white-space: pre-wrap; }
+.tp-meta { color: var(--tp-dim); font-size: 12.5px; line-height: 19px; margin-top: 8px; white-space: pre-wrap; }
+
+/* толкование */
+.oracle-win .tp-read { flex: 1 1 auto; min-height: 140px; overflow: auto; padding: 14px; }
+.oracle-win .tp-reading { color: var(--o-muted); font-size: 14px; line-height: 24px; }
+
+/* узкое окно и телефон: поля друг под другом, кнопка во всю ширину */
+@media (max-width: 760px) {
+  .tp-main { height: auto; }
+  .oracle-win .tp-read { flex: 0 0 auto; overflow: visible; }
+}
+@media (max-width: 560px) {
+  .tp-field, .tp-field-image { flex: 1 1 100%; }
+  .tp-label { width: 76px; }
+  .tp-label-image { margin-left: 0; }
+  .oracle-win.tonalpohualli .tp-input .tp-date { flex: 1; width: auto; }
+  .oracle-win.tonalpohualli .tp-btn { margin-left: 0; width: 100%; padding: 8px 10px; }
+  .oracle-win .tp-cell { padding: 10px; }
+  .tp-numcol { margin-right: 12px; }
+  .tp-num { font-size: 44px; }
+  .tp-sign { font-size: 21px; }
+}

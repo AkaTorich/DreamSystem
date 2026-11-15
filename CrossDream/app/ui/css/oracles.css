@@ -1,0 +1,67 @@
+/* Окна гаданий: общий каркас (js/oracles/common/frame.js). Свои цвета каждое гадание
+   задаёт в своей папке (js/oracles/<имя>/<имя>.css) через переменные ниже на классе темы. */
+.oracle-ov { background: rgba(0,0,0,.55); }
+.oracle-win {
+  --o-bg: #000; --o-fg: #e8e8e8; --o-muted: #9a9a9a; --o-border: #444; --o-ants: #e8e8e8;
+  --o-btn-border: #c8c8c8; --o-btn-hover: #1e1e1e; --o-font: Consolas, 'Cascadia Mono', monospace;
+  position: relative; display: flex; flex-direction: column;
+  width: var(--w); height: var(--h); max-width: 96vw; max-height: calc(100vh - 40px);
+  background: var(--o-bg); color: var(--o-fg); font-family: var(--o-font);
+  box-shadow: 0 30px 90px rgba(0,0,0,.7);
+}
+.oracle-bar {
+  flex: 0 0 32px; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 10px;
+  border-bottom: 1px solid var(--o-border); user-select: none; min-width: 0;
+}
+.oracle-bar .ob-title { color: var(--o-muted); font-size: 12px; white-space: nowrap; }
+.oracle-bar .ob-sub { flex: 1; text-align: center; font-size: 11px; color: var(--o-muted); opacity: .8;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis; min-width: 0; }
+.oracle-bar .ob-btns { display: flex; }
+.oracle-bar .ob-btns button { width: 30px; height: 24px; padding: 0; border: 0; border-radius: 0;
+  background: transparent; color: var(--o-muted); font-size: 13px; box-shadow: none; }
+.oracle-bar .ob-btns button:hover { background: var(--o-btn-hover); color: var(--o-fg); }
+.oracle-body { flex: 1; min-height: 0; overflow: auto; padding: 12px; position: relative; }
+
+/* бегущие муравьи: пунктир по краю окна, мерцает */
+.oracle-ants {
+  position: absolute; inset: 2px; pointer-events: none; opacity: .6;
+  background:
+    repeating-linear-gradient(90deg, var(--o-ants) 0 4px, transparent 4px 7px) top left / 100% 1.2px repeat-x,
+    repeating-linear-gradient(90deg, var(--o-ants) 0 4px, transparent 4px 7px) bottom left / 100% 1.2px repeat-x,
+    repeating-linear-gradient(0deg, var(--o-ants) 0 4px, transparent 4px 7px) top left / 1.2px 100% repeat-y,
+    repeating-linear-gradient(0deg, var(--o-ants) 0 4px, transparent 4px 7px) top right / 1.2px 100% repeat-y;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 4px var(--o-ants));
+  animation: oAntsRun 2s linear infinite, oAntsGlow 1.2s ease-in-out infinite alternate;
+}
+@keyframes oAntsRun {
+  from { background-position: 0 0, 0 100%, 0 0, 100% 0; }
+  to { background-position: -14px 0, 14px 100%, 0 14px, 100% -14px; }
+}
+@keyframes oAntsGlow { from { opacity: .45 } to { opacity: .8 } }
+
+/* кнопки и поля внутри окна гадания — без общего «стеклянного» вида */
+.oracle-win button { font-family: var(--o-font); color: var(--o-fg); background: var(--o-bg);
+  border: 1px solid var(--o-btn-border); border-radius:2px; padding: 5px 10px; font-size: 15px;
+ transition: background .15s, border-color .15s; }
+.oracle-win button:hover { background: var(--o-btn-hover); border-color: var(--o-fg);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--o-fg) 40%, transparent);
+  animation: oBtnPulse 1.4s ease-in-out infinite alternate; }
+@keyframes oBtnPulse { from { border-color: var(--o-btn-border) } to { border-color: var(--o-fg) } }
+.oracle-win input[type=text], .oracle-win input[type=number], .oracle-win input[type=date],
+.oracle-win textarea, .oracle-win select {
+  font-family: var(--o-font); background: var(--o-bg); color: var(--o-fg);
+  border: 1px solid var(--o-border); border-radius: 0; padding: 4px 6px; font-size: 14px; width: auto;
+}
+.oracle-win label { margin: 0; letter-spacing: 0; }
+.oracle-win .o-panel { border: 1px solid var(--o-border); border-radius:2px; padding: 10px; }
+.oracle-win .o-muted { color: var(--o-muted); }
+.oracle-win .o-reading { white-space: pre-wrap; line-height: 1.7; font-size: 14px; }
+
+/* телефон и узкое окно: гадание на весь экран */
+@media (max-width: 760px) {
+  .oracle-ov { align-items: stretch; justify-content: stretch; }
+  .oracle-win { width: 100vw; height: 100%; max-width: none; max-height: none; }
+  .oracle-bar .ob-sub { display: none; }
+  .oracle-body { padding: 8px; }
+}

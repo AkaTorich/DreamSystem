@@ -1,0 +1,13 @@
+/* Окна «Сайт» и «Настройки». */
+.cd-pal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 6px; }
+.cd-pal label { margin: 0; font-size: 11px; display: flex; flex-direction: column; gap: 4px; }
+.cd-pal input[type=color] { width: 100%; height: 34px; padding: 2px; border-radius:2px;
+  border: 1px solid var(--border); background: rgba(8,5,20,.6); cursor: pointer; }
+.cd-zoomrow { display: flex; align-items: center; gap: 12px; }
+.cd-zoomrow input[type=range] { flex: 1; accent-color: #8b7cf8; }
+.cd-zoomval { min-width: 48px; text-align: right; color: var(--dim); font-size: 13px; }
+
+@media (max-width: 760px) {
+  .cd-pal { grid-template-columns: repeat(3, 1fr); }
+  .cd-pal input[type=color] { height: 40px; }
+}

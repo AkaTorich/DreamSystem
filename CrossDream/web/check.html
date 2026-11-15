@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Проверка прослойки</title>
+<style>
+  body { background: #14121f; color: #e6e1ff; font: 14px/1.5 Consolas, monospace; margin: 16px; }
+  .ok { color: #8fd8b8; } .bad { color: #e08a8a; }
+</style>
+</head>
+<body>
+<h3>Прослойка CrossDream: модули и команды</h3>
+<pre id="out">проверяю…</pre>
+<!-- прослойка — до всего остального, как на странице программы -->
+<script type="module" src="shim/tauri.js"></script>
+<script type="module">
+// все модули прослойки — по одному: синтаксическая ошибка любого видна здесь же
+const MODULES = [
+  'shim/tauri.js',
+  'shim/lib/util.js', 'shim/lib/events.js', 'shim/lib/http.js', 'shim/lib/session.js', 'shim/lib/store.js',
+  'shim/lib/viewsync.js', 'shim/lib/dialog.js', 'shim/lib/dreams-cache.js', 'shim/lib/dream-links.js',
+  'shim/lib/dream-site.js', 'shim/lib/pdf-cache.js', 'shim/lib/pdf-upload.js',
+  'shim/cmd/site.js', 'shim/cmd/settings.js', 'shim/cmd/dreams.js', 'shim/cmd/pipeline.js', 'shim/cmd/places.js',
+  'shim/cmd/sync.js', 'shim/cmd/library.js', 'shim/cmd/pdf.js', 'shim/cmd/pdf-add.js', 'shim/cmd/covers.js',
+];
+// команды ядра (app\src\lib.rs) — на случай, если docs\CONTRACT.md рядом нет (на сайте его нет)
+const CORE = ['site_state', 'site_login', 'site_logout', 'site_call', 'site_upload', 'site_download',
+  'settings_get', 'settings_set', 'dreams_list', 'dream_save', 'dream_delete', 'dream_image', 'dream_set_image',
+  'dream_thumb', 'dream_analyze', 'planets_get', 'planet_set', 'positions_save', 'sync_all', 'legacy_import',
+  'lib_index', 'books_get', 'books_save', 'suite_download', 'save_text_file', 'read_text_file', 'pdfs_list',
+  'pdf_add', 'pdf_add_bytes', 'pdf_read', 'pdf_open', 'pdf_delete', 'pdf_rename', 'pdfs_refresh', 'pdf_page_set',
+  'cover_get', 'cover_put'];
+
+const lines = [];
+let bad = 0;
+const say = (ok, text) => { if (!ok) bad++; lines.push((ok ? '✓ ' : '✕ ') + text); };
+
+async function contractCommands() {
+  try {
+    const r = await fetch('../docs/CONTRACT.md', { cache: 'no-store' });
+    if (!r.ok) return null;
+    const names = new Set();
+    for (const m of (await r.text()).matchAll(/^\|\s*(`[a-z_]+`(?:\s*\/\s*`[a-z_]+`)*)\s*\|/gm))
+      for (const n of m[1].matchAll(/`([a-z_]+)`/g)) names.add(n[1]);
+    return names.size ? [...names] : null;
+  } catch { return null; }
+}
+
+(async () => {
+  for (const m of MODULES) {
+    try { await import('./' + m); say(true, 'модуль ' + m); }
+    catch (e) { say(false, 'модуль ' + m + ': ' + (e && e.message ? e.message : e)); }
+  }
+  const T = window.__TAURI__;
+  say(!!T && !!T.core && !!T.event && !!T.dialog, 'window.__TAURI__ = {core, event, dialog}');
+  say(window.__CD_WEB__ === true, 'window.__CD_WEB__ = true');
+  const { COMMANDS } = await import('./shim/tauri.js');
+
+  const fromDoc = await contractCommands();
+  const want = [...new Set([...(fromDoc || []), ...CORE])];
+  say(true, 'команд в договоре: ' + (fromDoc ? fromDoc.length + ' (docs\\CONTRACT.md)' : 'файла нет — список ядра') +
+    ', всего к проверке: ' + want.length);
+  for (const c of want) say(typeof COMMANDS[c] === 'function', 'команда ' + c);
+  const extra = Object.keys(COMMANDS).filter(c => !want.includes(c));
+  say(!extra.length, 'лишних команд нет' + (extra.length ? ': ' + extra.join(', ') : ''));
+
+  // мелочи, не трогающие сайт
+  const u = await import('./shim/lib/util.js');
+  say(u.shortLoc('  Тёмный   лес, у реки ') === 'Тёмный лес', 'shortLoc: до запятой');
+  say(u.shortLoc('Очень большой старый дом у моря') === 'Очень большой старый', 'shortLoc: не больше трёх слов');
+  say(u.decide(true, '2026-01-01 00:00:05', true, '2026-01-01 00:00:00') === 'local', 'decide: своё новее');
+  say(u.decide(true, '2026-01-01 00:00:01', true, '2026-01-01 00:00:00') === 'same', 'decide: допуск в секунду');
+  say(u.decide(false, null, true, null) === 'site', 'decide: значение только на сайте');
+  say(/^d\d{18}$/.test(u.newDreamId()) && /^p\d{18}$/.test(u.newPdfId()), 'новые Id: d/p + метка времени');
+  const dc = await import('./shim/lib/dreams-cache.js');
+  const d = dc.dreamFromSite({ id: '7', ext_id: null, title: '', dream_date: '2026-11-01', text: 'т', summary: 'с',
+    location: 'Двор дома, ночью', characters: ['кот'], emotions: [], symbols: [], motifs: [], image_file: 'a.jpg',
+    pos_x: '0.5', pos_y: null, pos_z: null, pos_time: null });
+  say(d.Id === 'web7' && d.Title === 'Сон без имени' && d.Analysis.Location === 'Двор дома' && d.ImageFile === 'a.jpg' && d.PosX === 0.5,
+    'сон сайта → сон программы');
+  const pc = await import('./shim/lib/pdf-cache.js');
+  const pl = pc.parseList({ pdfs: [{ id: '12', ext_id: 'p6385', title: 'Сны', last_page: '7', size: '1048576', has_cover: '1' },
+    { id: 13, ext_id: '', title: 'Без кода', size: 2048, has_cover: 0 }] });
+  say(pl[0].localId === 'p6385' && pl[0].siteId === 12 && pl[0].hasCover && pl[1].localId === 'webp13', 'список PDF сайта');
+  say(T.core.convertFileSrc('../api.php?action=img&f=a.jpg') === '../api.php?action=img&f=a.jpg', 'convertFileSrc: адрес — как есть');
+  say(/api\.php\?action=pdf_file&id=13$/.test(T.core.convertFileSrc('webp13', 'cdpdf')), 'convertFileSrc(id, cdpdf) → pdf_file');
+  try { await T.core.invoke('legacy_import'); say(false, 'legacy_import должен отказать'); }
+  catch (e) { say(typeof e === 'string' && e.includes('только в программе для Windows'), 'legacy_import: ' + e); }
+  try { await T.core.invoke('нет_такой'); say(false, 'незнакомая команда'); }
+  catch (e) { say(typeof e === 'string', 'незнакомая команда: ' + e); }
+  const st = await T.core.invoke('settings_get');
+  say(st && st.TextModel && 'PdfPage' in st && 'MapZoom' in st && !('SitePass' in st), 'settings_get: форма ядра');
+  let heard = null;
+  const stop = await T.event.listen('test://ping', e => { heard = e.payload; });
+  await T.event.emit('test://ping', { n: 1 });
+  stop();
+  say(heard && heard.n === 1, 'события: listen / emit / отписка');
+
+  const out = document.getElementById('out');
+  out.textContent = lines.join('\n') + '\n\n' + (bad ? 'ОШИБОК: ' + bad : 'ВСЁ ХОРОШО');
+  out.className = bad ? 'bad' : 'ok';
+  document.title = bad ? 'FAIL ' + bad : 'OK';
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; background: #0E0A20; }
+  body { font-family: Georgia, "PT Serif", serif; color: #D8D2EC; }
+
+  .page { position: relative; width: 210mm; height: 297mm; background: #0E0A20;
+    page-break-after: always; overflow: hidden; }
+  .page:last-child { page-break-after: auto; }
+  .frame { position: absolute; top: 9mm; left: 9mm; right: 9mm; bottom: 9mm;
+    border: 0.35mm solid rgba(139,124,248,.6); padding: 13mm 15mm; }
+  /* внутренняя тонкая линия — рамка двойная */
+  .frame::before { content: ""; position: absolute; top: 1.3mm; left: 1.3mm; right: 1.3mm; bottom: 1.3mm;
+    border: 0.2mm solid rgba(139,124,248,.28); pointer-events: none; }
+  /* звёздочки по углам рамки */
+  .frame .c { position: absolute; width: 4mm; height: 4mm; line-height: 4mm; text-align: center;
+    font-size: 8.5pt; color: #A99BFA; background: #0E0A20; font-style: normal; }
+  .frame .tl { top: -2.1mm; left: -2.1mm; }   .frame .tr { top: -2.1mm; right: -2.1mm; }
+  .frame .bl { bottom: -2.1mm; left: -2.1mm; } .frame .br { bottom: -2.1mm; right: -2.1mm; }
+  /* обложка: небо до края, без рамки */
+  .cover .frame { border: none; }
+  .cover .frame::before { display: none; }
+  .sky { position: absolute; left: 0; top: 0; width: 210mm; height: 297mm; }
+  .pageno { position: absolute; left: 0; right: 0; bottom: 4.2mm; text-align: center;
+    color: #6A5FA0; font-size: 10pt; letter-spacing: 2px; }
+
+  h1.cover { color: #CABEFC; font-size: 50pt; font-weight: 700; letter-spacing: 4px;
+    text-align: center; margin: 78mm 0 0; }
+  .moon { text-align:center; font-size: 34pt; color:#9370FF; margin: 4mm 0 0; }
+  .sub { text-align: center; font-style: italic; font-size: 15.5pt; color: #D8D2EC; margin: 10mm 0 0; }
+  .rule { width: 46mm; height: 1px; background: #8B7CF8; margin: 7mm auto 0; opacity: .8; }
+  .epi { text-align: center; font-size: 13pt; color: #9A90C9; line-height: 1.6;
+    margin: 12mm auto 0; max-width: 130mm; }
+  .imprint { position: absolute; left: 0; right: 0; bottom: 20mm; text-align: center;
+    color: #8B7CF8; font-size: 10.5pt; letter-spacing: 2px; }
+
+  h2 { color: #CABEFC; font-size: 16pt; font-weight: 700; letter-spacing: .5px; margin: 8mm 0 0; }
+  h2:first-child { margin-top: 0; }
+  h2 .u { display: block; width: 20mm; height: 1px; background: #8B7CF8; margin-top: 2.2mm; opacity: .7; }
+  h3 { color: #B6A9E8; font-size: 12.5pt; margin: 5mm 0 0; }
+  p { font-size: 11.6pt; line-height: 1.55; margin: 3mm 0 0; text-align: justify; }
+  ul { margin: 3mm 0 0; padding: 0; list-style: none; }
+  li { font-size: 11.4pt; line-height: 1.5; margin: 2.4mm 0 0; padding-left: 7mm; position: relative;
+    text-align: justify; }
+  li::before { content: "✦"; position: absolute; left: 0.5mm; color: #8B7CF8; font-size: 8pt; top: 1.2mm; }
+  .k { color: #CABEFC; font-weight: 700; }
+  .code { font-family: Consolas, "Courier New", monospace; font-size: 11pt; color: #CABEFC;
+    background: rgba(139,124,248,.12); border: 1px solid rgba(139,124,248,.35); border-radius: 2mm;
+    padding: 2mm 4mm; text-align: left; }
+  .btn { color:#B6A9E8; font-weight:700; white-space:nowrap; }
+  .note { color:#9A90C9; font-style:italic; font-size: 11pt; }
+  .two { display: flex; gap: 8mm; }
+  .two > div { flex: 1; }
+</style></head>
+<body>
+
+<!-- 1. обложка -->
+<div class="page cover">
+  <svg class="sky" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+  <radialGradient id="n0"><stop offset="0" stop-color="#2B1E6B" stop-opacity=".35"/><stop offset=".35" stop-color="#2B1E6B" stop-opacity=".2"/><stop offset=".6" stop-color="#2B1E6B" stop-opacity=".09"/><stop offset=".82" stop-color="#2B1E6B" stop-opacity=".03"/><stop offset="1" stop-color="#2B1E6B" stop-opacity="0"/></radialGradient>
+  <radialGradient id="n1"><stop offset="0" stop-color="#123A52" stop-opacity=".35"/><stop offset=".35" stop-color="#123A52" stop-opacity=".2"/><stop offset=".6" stop-color="#123A52" stop-opacity=".09"/><stop offset=".82" stop-color="#123A52" stop-opacity=".03"/><stop offset="1" stop-color="#123A52" stop-opacity="0"/></radialGradient>
+  <radialGradient id="n2"><stop offset="0" stop-color="#4A1D5E" stop-opacity=".35"/><stop offset=".35" stop-color="#4A1D5E" stop-opacity=".2"/><stop offset=".6" stop-color="#4A1D5E" stop-opacity=".09"/><stop offset=".82" stop-color="#4A1D5E" stop-opacity=".03"/><stop offset="1" stop-color="#4A1D5E" stop-opacity="0"/></radialGradient>
+  </defs>
+  <circle cx="57.8" cy="53.2" r="63.8" fill="url(#n0)"/>
+  <circle cx="172.2" cy="205.4" r="56.7" fill="url(#n1)"/>
+  <circle cx="109.2" cy="207.6" r="39.7" fill="url(#n2)"/>
+  <circle cx="152.16" cy="278.41" r="0.52" fill="#CFD8FF" fill-opacity="0.65"/>
+  <circle cx="104.84" cy="42.16" r="0.35" fill="#CFD8FF" fill-opacity="0.37"/>
+  <circle cx="48.97" cy="245.80" r="0.22" fill="#CFD8FF" fill-opacity="0.57"/>
+  <circle cx="162.81" cy="9.86" r="0.35" fill="#CFD8FF" fill-opacity="0.82"/>
+  <circle cx="85.53" cy="203.16" r="0.47" fill="#CFD8FF" fill-opacity="0.37"/>
+  <circle cx="127.98" cy="264.88" r="0.19" fill="#CFD8FF" fill-opacity="0.57"/>
+  <circle cx="143.13" cy="58.25" r="0.50" fill="#CFD8FF" fill-opacity="0.86"/>
+  <circle cx="72.81" cy="46.24" r="0.13" fill="#CFD8FF" fill-opacity="0.94"/>
+  <circle cx="149.33" cy="240.07" r="0.17" fill="#CFD8FF" fill-opacity="0.79"/>
+  <circle cx="81.00" cy="124.02" r="0.31" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="48.81" cy="29.64" r="0.40" fill="#CFD8FF" fill-opacity="0.83"/>
+  <circle cx="24.40" cy="266.43" r="0.31" fill="#CFD8FF" fill-opacity="0.53"/>
+  <circle cx="64.12" cy="39.59" r="0.49" fill="#CFD8FF" fill-opacity="0.96"/>
+  <circle cx="169.25" cy="55.35" r="0.13" fill="#CFD8FF" fill-opacity="0.83"/>
+  <circle cx="2.85" cy="32.59" r="0.25" fill="#CFD8FF" fill-opacity="0.95"/>
+  <circle cx="165.24" cy="256.65" r="0.28" fill="#CFD8FF" fill-opacity="0.87"/>
+  <circle cx="140.19" cy="162.13" r="0.34" fill="#CFD8FF" fill-opacity="0.79"/>
+  <circle cx="46.37" cy="185.60" r="0.46" fill="#CFD8FF" fill-opacity="0.96"/>
+  <circle cx="74.29" cy="45.91" r="0.47" fill="#CFD8FF" fill-opacity="0.32"/>
+  <circle cx="25.32" cy="175.47" r="0.27" fill="#CFD8FF" fill-opacity="0.89"/>
+  <circle cx="112.09" cy="56.01" r="0.44" fill="#CFD8FF" fill-opacity="0.74"/>
+  <circle cx="180.59" cy="105.26" r="0.49" fill="#CFD8FF" fill-opacity="0.50"/>
+  <circle cx="168.23" cy="83.09" r="0.45" fill="#CFD8FF" fill-opacity="0.42"/>
+  <circle cx="171.79" cy="115.54" r="0.30" fill="#CFD8FF" fill-opacity="0.41"/>
+  <circle cx="46.22" cy="35.78" r="0.20" fill="#CFD8FF" fill-opacity="0.29"/>
+  <circle cx="0.88" cy="294.44" r="0.32" fill="#CFD8FF" fill-opacity="0.98"/>
+  <circle cx="44.07" cy="80.02" r="0.15" fill="#CFD8FF" fill-opacity="0.93"/>
+  <circle cx="169.24" cy="157.63" r="0.41" fill="#CFD8FF" fill-opacity="0.92"/>
+  <circle cx="55.01" cy="223.59" r="0.45" fill="#CFD8FF" fill-opacity="0.28"/>
+  <circle cx="101.09" cy="132.53" r="0.47" fill="#CFD8FF" fill-opacity="0.30"/>
+  <circle cx="184.02" cy="280.09" r="0.35" fill="#CFD8FF" fill-opacity="0.63"/>
+  <circle cx="185.93" cy="197.07" r="0.20" fill="#CFD8FF" fill-opacity="0.35"/>
+  <circle cx="93.53" cy="59.80" r="0.52" fill="#CFD8FF" fill-opacity="0.75"/>
+  <circle cx="102.55" cy="236.02" r="0.38" fill="#CFD8FF" fill-opacity="0.21"/>
+  <circle cx="96.91" cy="202.24" r="0.18" fill="#CFD8FF" fill-opacity="0.56"/>
+  <circle cx="99.48" cy="6.03" r="0.24" fill="#CFD8FF" fill-opacity="0.24"/>
+  <circle cx="193.16" cy="116.08" r="0.16" fill="#CFD8FF" fill-opacity="0.24"/>
+  <circle cx="104.53" cy="123.22" r="0.25" fill="#CFD8FF" fill-opacity="0.87"/>
+  <circle cx="57.12" cy="19.47" r="0.30" fill="#CFD8FF" fill-opacity="0.61"/>
+  <circle cx="148.43" cy="229.79" r="0.48" fill="#CFD8FF" fill-opacity="0.44"/>
+  <circle cx="183.62" cy="116.43" r="0.19" fill="#CFD8FF" fill-opacity="0.30"/>
+  <circle cx="22.23" cy="107.59" r="0.23" fill="#CFD8FF" fill-opacity="0.66"/>
+  <circle cx="60.91" cy="98.57" r="0.45" fill="#CFD8FF" fill-opacity="0.35"/>
+  <circle cx="97.67" cy="126.85" r="0.42" fill="#CFD8FF" fill-opacity="0.28"/>
+  <circle cx="128.93" cy="152.45" r="0.39" fill="#CFD8FF" fill-opacity="0.78"/>
+  <circle cx="34.27" cy="103.11" r="0.13" fill="#CFD8FF" fill-opacity="0.64"/>
+  <circle cx="69.46" cy="55.95" r="0.29" fill="#CFD8FF" fill-opacity="0.65"/>
+  <circle cx="112.47" cy="242.83" r="0.27" fill="#CFD8FF" fill-opacity="0.30"/>
+  <circle cx="54.33" cy="173.98" r="0.25" fill="#CFD8FF" fill-opacity="0.53"/>
+  <circle cx="141.24" cy="255.68" r="0.20" fill="#CFD8FF" fill-opacity="0.57"/>
+  <circle cx="144.29" cy="167.13" r="0.46" fill="#CFD8FF" fill-opacity="0.48"/>
+  <circle cx="154.64" cy="194.23" r="0.23" fill="#CFD8FF" fill-opacity="0.52"/>
+  <circle cx="170.18" cy="218.59" r="0.24" fill="#CFD8FF" fill-opacity="0.95"/>
+  <circle cx="23.37" cy="211.06" r="0.39" fill="#CFD8FF" fill-opacity="0.21"/>
+  <circle cx="12.46" cy="141.00" r="0.34" fill="#CFD8FF" fill-opacity="0.90"/>
+  <circle cx="151.16" cy="83.36" r="0.21" fill="#CFD8FF" fill-opacity="0.67"/>
+  <circle cx="166.56" cy="132.28" r="0.37" fill="#CFD8FF" fill-opacity="0.85"/>
+  <circle cx="147.91" cy="213.51" r="0.42" fill="#CFD8FF" fill-opacity="0.79"/>
+  <circle cx="25.81" cy="115.46" r="0.26" fill="#CFD8FF" fill-opacity="0.42"/>
+  <circle cx="57.97" cy="5.70" r="0.45" fill="#CFD8FF" fill-opacity="0.90"/>
+  <circle cx="46.84" cy="129.21" r="0.23" fill="#CFD8FF" fill-opacity="0.67"/>
+  <circle cx="204.26" cy="271.63" r="0.24" fill="#CFD8FF" fill-opacity="0.33"/>
+  <circle cx="122.48" cy="51.73" r="0.16" fill="#CFD8FF" fill-opacity="0.87"/>
+  <circle cx="62.58" cy="228.55" r="0.14" fill="#CFD8FF" fill-opacity="0.54"/>
+  <circle cx="161.72" cy="37.39" r="0.32" fill="#CFD8FF" fill-opacity="0.62"/>
+  <circle cx="161.89" cy="189.18" r="0.22" fill="#CFD8FF" fill-opacity="0.43"/>
+  <circle cx="27.04" cy="105.29" r="0.40" fill="#CFD8FF" fill-opacity="0.72"/>
+  <circle cx="207.28" cy="89.68" r="0.11" fill="#CFD8FF" fill-opacity="0.69"/>
+  <circle cx="76.24" cy="100.83" r="0.18" fill="#CFD8FF" fill-opacity="0.58"/>
+  <circle cx="193.49" cy="286.81" r="0.44" fill="#CFD8FF" fill-opacity="0.47"/>
+  <circle cx="12.76" cy="182.72" r="0.18" fill="#CFD8FF" fill-opacity="0.93"/>
+  <circle cx="33.72" cy="56.11" r="0.41" fill="#CFD8FF" fill-opacity="0.31"/>
+  <circle cx="5.93" cy="60.22" r="0.32" fill="#CFD8FF" fill-opacity="0.47"/>
+  <circle cx="51.30" cy="145.28" r="0.38" fill="#CFD8FF" fill-opacity="0.89"/>
+  <circle cx="142.75" cy="139.85" r="0.33" fill="#CFD8FF" fill-opacity="0.25"/>
+  <circle cx="86.12" cy="221.55" r="0.44" fill="#CFD8FF" fill-opacity="0.98"/>
+  <circle cx="97.59" cy="80.02" r="0.22" fill="#CFD8FF" fill-opacity="0.28"/>
+  <circle cx="35.24" cy="291.75" r="0.33" fill="#CFD8FF" fill-opacity="0.90"/>
+  <circle cx="37.29" cy="253.50" r="0.47" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="111.70" cy="237.59" r="0.33" fill="#CFD8FF" fill-opacity="0.53"/>
+  <circle cx="202.33" cy="210.60" r="0.29" fill="#CFD8FF" fill-opacity="0.65"/>
+  <circle cx="184.84" cy="225.04" r="0.44" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="1.94" cy="91.18" r="0.25" fill="#CFD8FF" fill-opacity="0.23"/>
+  <circle cx="102.86" cy="105.78" r="0.27" fill="#CFD8FF" fill-opacity="0.45"/>
+  <circle cx="179.64" cy="233.91" r="0.35" fill="#CFD8FF" fill-opacity="0.25"/>
+  <circle cx="37.04" cy="82.75" r="0.31" fill="#CFD8FF" fill-opacity="0.20"/>
+  <circle cx="82.59" cy="178.62" r="0.34" fill="#CFD8FF" fill-opacity="0.45"/>
+  <circle cx="68.20" cy="274.87" r="0.34" fill="#CFD8FF" fill-opacity="0.46"/>
+  <circle cx="30.96" cy="278.42" r="0.43" fill="#CFD8FF" fill-opacity="0.90"/>
+  <circle cx="68.11" cy="283.28" r="0.48" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="78.67" cy="53.46" r="0.42" fill="#CFD8FF" fill-opacity="0.27"/>
+  <circle cx="143.84" cy="103.18" r="0.37" fill="#CFD8FF" fill-opacity="0.88"/>
+  <circle cx="160.33" cy="236.78" r="0.35" fill="#CFD8FF" fill-opacity="0.63"/>
+  <circle cx="185.01" cy="106.16" r="0.32" fill="#CFD8FF" fill-opacity="0.25"/>
+  <circle cx="180.31" cy="134.79" r="0.18" fill="#CFD8FF" fill-opacity="0.23"/>
+  <circle cx="186.28" cy="265.62" r="0.24" fill="#CFD8FF" fill-opacity="0.63"/>
+  <circle cx="208.22" cy="159.66" r="0.30" fill="#CFD8FF" fill-opacity="0.70"/>
+  <circle cx="30.42" cy="277.64" r="0.11" fill="#CFD8FF" fill-opacity="0.87"/>
+  <circle cx="152.07" cy="52.61" r="0.52" fill="#CFD8FF" fill-opacity="0.76"/>
+  <circle cx="98.52" cy="5.74" r="0.21" fill="#CFD8FF" fill-opacity="0.30"/>
+  <circle cx="205.20" cy="5.05" r="0.26" fill="#CFD8FF" fill-opacity="0.82"/>
+  <circle cx="181.14" cy="286.96" r="0.35" fill="#CFD8FF" fill-opacity="0.91"/>
+  <circle cx="99.36" cy="11.21" r="0.38" fill="#CFD8FF" fill-opacity="0.81"/>
+  <circle cx="75.54" cy="149.64" r="0.38" fill="#CFD8FF" fill-opacity="0.88"/>
+  <circle cx="149.12" cy="41.90" r="0.32" fill="#CFD8FF" fill-opacity="0.57"/>
+  <circle cx="199.95" cy="168.18" r="0.14" fill="#CFD8FF" fill-opacity="0.64"/>
+  <circle cx="23.07" cy="40.74" r="0.36" fill="#CFD8FF" fill-opacity="0.92"/>
+  <circle cx="205.94" cy="3.54" r="0.50" fill="#CFD8FF" fill-opacity="0.68"/>
+  <circle cx="125.31" cy="155.81" r="0.14" fill="#CFD8FF" fill-opacity="0.79"/>
+  <circle cx="12.43" cy="291.15" r="0.38" fill="#CFD8FF" fill-opacity="0.75"/>
+  <circle cx="119.98" cy="19.81" r="0.52" fill="#CFD8FF" fill-opacity="0.99"/>
+  <circle cx="193.17" cy="203.16" r="0.40" fill="#CFD8FF" fill-opacity="0.68"/>
+  <circle cx="32.94" cy="98.83" r="0.33" fill="#CFD8FF" fill-opacity="0.34"/>
+  <circle cx="67.94" cy="161.42" r="0.19" fill="#CFD8FF" fill-opacity="0.51"/>
+  <circle cx="108.63" cy="34.88" r="0.33" fill="#CFD8FF" fill-opacity="1.00"/>
+  <circle cx="190.89" cy="189.77" r="0.14" fill="#CFD8FF" fill-opacity="0.51"/>
+  <circle cx="52.20" cy="100.73" r="0.19" fill="#CFD8FF" fill-opacity="0.77"/>
+  <circle cx="25.94" cy="115.38" r="0.21" fill="#CFD8FF" fill-opacity="0.81"/>
+  <circle cx="57.49" cy="173.95" r="0.29" fill="#CFD8FF" fill-opacity="0.97"/>
+  <circle cx="72.14" cy="182.57" r="0.18" fill="#CFD8FF" fill-opacity="0.95"/>
+  <circle cx="36.38" cy="5.09" r="0.51" fill="#CFD8FF" fill-opacity="0.26"/>
+  <circle cx="201.42" cy="2.23" r="0.12" fill="#CFD8FF" fill-opacity="0.95"/>
+  <circle cx="152.17" cy="18.82" r="0.41" fill="#CFD8FF" fill-opacity="0.71"/>
+  <circle cx="76.00" cy="204.48" r="0.41" fill="#CFD8FF" fill-opacity="0.31"/>
+  <circle cx="177.18" cy="19.74" r="0.14" fill="#CFD8FF" fill-opacity="0.68"/>
+  <circle cx="25.04" cy="205.57" r="0.22" fill="#CFD8FF" fill-opacity="0.26"/>
+  <circle cx="120.44" cy="113.90" r="0.47" fill="#CFD8FF" fill-opacity="0.69"/>
+  <circle cx="169.77" cy="249.85" r="0.29" fill="#CFD8FF" fill-opacity="0.72"/>
+  <circle cx="149.12" cy="137.64" r="0.28" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="67.63" cy="44.82" r="0.14" fill="#CFD8FF" fill-opacity="0.71"/>
+  <circle cx="24.23" cy="254.29" r="0.38" fill="#CFD8FF" fill-opacity="0.77"/>
+  <circle cx="110.46" cy="2.67" r="0.28" fill="#CFD8FF" fill-opacity="0.71"/>
+  <circle cx="19.10" cy="198.30" r="0.50" fill="#CFD8FF" fill-opacity="0.20"/>
+  <circle cx="56.08" cy="210.71" r="0.37" fill="#CFD8FF" fill-opacity="0.44"/>
+  <circle cx="196.29" cy="83.97" r="0.18" fill="#CFD8FF" fill-opacity="0.34"/>
+  <circle cx="98.59" cy="25.70" r="0.27" fill="#CFD8FF" fill-opacity="0.86"/>
+  <circle cx="155.05" cy="130.15" r="0.21" fill="#CFD8FF" fill-opacity="0.26"/>
+  </svg>
+<div class="frame">
+  <div class="moon">☾</div>
+  <h1 class="cover">КАРТА СНОВ</h1>
+  <div class="sub">дневник сновидений, где каждый сон становится звездой</div>
+  <div class="rule"></div>
+  <div class="epi">Записывайте сны — программа сама сплетает их в живую карту:
+    по местам, людям, чувствам и символам. Толкует, связывает и хранит —
+    на Windows, Android, macOS, Linux и iPhone/iPad.</div>
+  <div class="imprint">РУКОВОДСТВО ПОЛЬЗОВАТЕЛЯ</div>
+</div><div class="pageno">— 1 —</div></div>
+
+<!-- 2. что это, где работает, установка -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ЧТО ЭТО ЗА ПРОГРАММА<span class="u"></span></h2>
+  <p>«Карта снов» — дневник сновидений с живой картой-небом. Каждый записанный сон становится
+    звездой; сны, снившиеся в одном месте, кружат вокруг общей планеты-локации; родственные сны
+    тянут друг к другу нити. Со временем из отдельных записей вырастает ваш личный космос.</p>
+  <p>Одна и та же программа работает на <span class="k">Windows, Android, macOS, Linux и iPhone/iPad</span>.
+    Войдите на всех устройствах одним аккаунтом — сны, книги и PDF окажутся везде одинаковыми.
+    Без входа программа тоже работает: дневник, карта, библиотека и гадания — на этом устройстве.</p>
+
+  <h2>УСТАНОВКА<span class="u"></span></h2>
+  <ul>
+    <li><span class="k">Windows</span> — запустите <span class="btn">CrossDream_…_x64-setup.exe</span>.
+      Программа встанет в «Программы» вашего профиля, ярлыки появятся на рабочем столе и в Пуске.</li>
+    <li><span class="k">Android</span> — откройте на телефоне <span class="btn">CrossDream.apk</span> и
+      разрешите установку из этого источника. На экране появится «Карта снов».</li>
+    <li><span class="k">macOS</span> — откройте <span class="btn">CrossDream_…_universal.dmg</span> и
+      перетащите программу в «Программы». Подходит и для Intel, и для Apple Silicon.</li>
+    <li><span class="k">Linux</span> — <span class="btn">.AppImage</span> (сделать исполняемым и запустить)
+      или пакет <span class="btn">.deb</span> для Ubuntu и Debian.</li>
+    <li><span class="k">iPhone и iPad</span> — файл <span class="btn">CrossDream-unsigned.ipa</span>,
+      ставится через Sideloadly или AltStore с вашим обычным Apple ID.</li>
+  </ul>
+  <p class="note">Как поставить на Mac, Android, iPhone и iPad без платных сертификатов — страницы 3 и 4.</p>
+
+  <h2>ПЕРВЫЙ ЗАПУСК<span class="u"></span></h2>
+  <ul>
+    <li>Если у вас уже есть аккаунт на сайте — откройте вкладку <span class="btn">Сайт</span> и войдите:
+      ваши сны, книги и обложки PDF придут сами.</li>
+    <li>Если раньше вы вели дневник в прежней программе для Windows — кнопка <span class="btn">⋯</span>
+      справа вверху → «Импорт снов из прежней программы».</li>
+    <li>Новый сон — кнопка <span class="btn">Записать сон</span> справа в шапке.</li>
+    <li>Расцветку окна — одну из двадцати — выберите во вкладке <span class="btn">Настройки</span>.</li>
+  </ul>
+</div><div class="pageno">— 2 —</div></div>
+
+<!-- 3. установка без подписи: Mac и Android -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>УСТАНОВКА НА MAC<span class="u"></span></h2>
+  <p>Программа собрана без подписи Apple — подпись выдаётся только платной учётной записи разработчика.
+    Поэтому при первом запуске macOS предупреждает. Это нужно пройти один раз:</p>
+  <ul>
+    <li>Откройте <span class="btn">.dmg</span> и перетащите «CrossDream» в папку «Программы».</li>
+    <li>Запустите. macOS скажет, что не может проверить разработчика, — нажмите
+      <span class="k">«Готово»</span> (не «Переместить в корзину»).</li>
+    <li>Откройте <span class="k">Системные настройки → Конфиденциальность и безопасность</span>, прокрутите
+      вниз: там строка про CrossDream и кнопка <span class="k">«Всё равно открыть»</span>. Нажмите и подтвердите
+      паролем Mac. Дальше программа открывается как обычно.</li>
+    <li>На macOS 14 и старше можно короче: правый клик по программе → «Открыть» → «Открыть».</li>
+  </ul>
+  <p>Если macOS пишет, что программа <span class="k">«повреждена»</span>, — она цела: так он называет
+    скачанные программы без подписи. Откройте «Терминал», выполните одну строку и запустите снова:</p>
+  <p class="code">xattr -cr /Applications/CrossDream.app</p>
+
+  <h2>УСТАНОВКА НА ANDROID<span class="u"></span></h2>
+  <p>Файл <span class="btn">CrossDream.apk</span> подписан собственным ключом программы, а не магазином
+    Google Play, — поэтому телефон попросит разрешения:</p>
+  <ul>
+    <li>Перенесите apk на телефон — кабелем, через облако или отправив себе в мессенджер.</li>
+    <li>Откройте файл. Телефон скажет, что установка из этого источника запрещена: нажмите
+      <span class="k">«Настройки»</span>, включите <span class="k">«Разрешить из этого источника»</span>
+      для приложения, которым открыли файл (Файлы, Chrome, Telegram), и вернитесь назад.</li>
+    <li><span class="k">«Установить»</span>. Если Play Защита предупредит о неизвестном разработчике —
+      «Подробнее» → <span class="k">«Всё равно установить»</span>.</li>
+    <li>Новая версия ставится так же, поверх прежней: сны и настройки сохраняются, потому что все версии
+      подписаны одним ключом.</li>
+  </ul>
+</div><div class="pageno">— 3 —</div></div>
+
+<!-- 4. установка на iPhone и iPad без платной учётной записи -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>УСТАНОВКА НА IPHONE И IPAD<span class="u"></span></h2>
+  <p>На iPhone и iPad без подписи Apple не ставится ни одна программа — так устроена iOS. Платная
+    учётная запись разработчика не нужна: программу можно подписать своим <span class="k">обычным
+    бесплатным Apple ID</span>. Для этого есть файл <span class="btn">CrossDream-unsigned.ipa</span>
+    и программа-установщик Sideloadly (для Windows и Mac) или AltStore.</p>
+  <ul>
+    <li>На компьютер поставьте <span class="k">Sideloadly</span> с его сайта sideloadly.io. На Windows ей
+      нужны ещё iTunes и iCloud — версии с сайта Apple, не из Microsoft Store.</li>
+    <li>Подключите iPhone кабелем и на телефоне нажмите <span class="k">«Доверять этому компьютеру»</span>.</li>
+    <li>Перетащите <span class="btn">CrossDream-unsigned.ipa</span> в окно Sideloadly, впишите свой Apple ID
+      и нажмите <span class="k">Start</span>. Sideloadly подпишет программу вашим Apple ID и поставит её.</li>
+    <li>На iPhone: <span class="k">Настройки → Основные → VPN и управление устройством</span> → ваш
+      Apple ID → <span class="k">«Доверять»</span>.</li>
+    <li>На iOS 16 и новее один раз включите <span class="k">Настройки → Конфиденциальность и безопасность →
+      Режим разработчика</span>; телефон перезагрузится и спросит подтверждение.</li>
+  </ul>
+  <h3>Что надо знать</h3>
+  <ul>
+    <li>Подпись бесплатным Apple ID действует <span class="k">7 дней</span>. Потом программа перестаёт
+      открываться — поставьте её тем же путём ещё раз: сны и настройки сохраняются, а сны к тому же
+      лежат на сайте. AltStore умеет продлевать подпись сам, когда телефон и компьютер в одной сети Wi-Fi.</li>
+    <li>Одновременно бесплатным Apple ID можно держать до трёх таких программ.</li>
+    <li>С платной учётной записью разработчика Apple недельного предела нет: её ID команды кладётся
+      в секреты репозитория (APPLE_DEVELOPMENT_TEAM), и сборка сразу выходит подписанной для устройств.</li>
+    <li>Для Mac есть ещё сборка для симулятора iPhone (CrossDream.app) — она запускается в Xcode,
+      на телефон она не ставится.</li>
+  </ul>
+</div><div class="pageno">— 4 —</div></div>
+
+<!-- 5. окно и карта -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ОКНО ПРОГРАММЫ<span class="u"></span></h2>
+  <p>Вверху — <span class="k">вкладки</span>: <span class="btn">Карта</span>, <span class="btn">Сны</span>,
+    <span class="btn">Библиотека</span>, <span class="btn">Настройки</span>, <span class="btn">Сайт</span>;
+    модераторам и выше — ещё <span class="btn">Космос</span> и <span class="btn">Пользователи</span>.
+    Каждая вкладка открывается на всё окно. Пока открыта другая вкладка, карта не рисуется и не
+    тратит силы компьютера.</p>
+  <p>Открытая книга PDF получает <span class="k">свою вкладку</span> с названием. Можно уйти на другую
+    вкладку и вернуться — книга ждёт на той же странице; крестик на вкладке её закрывает.</p>
+  <p>Справа в шапке — <span class="btn">Записать сон</span>, после входа — <span class="k">ларец даров</span>
+    и <span class="k">доверие</span>, и кнопка <span class="btn">⋯</span> с импортом снов. На телефоне подписи
+    вкладок прячутся, остаются значки. Внизу — <span class="k">строка состояния</span>: ход синхронизации,
+    скачивания и отправки книг.</p>
+
+  <h2>КАРТА<span class="u"></span></h2>
+  <ul>
+    <li><span class="k">Сдвиг</span> — тащите пустое место мышью или пальцем; <span class="k">приближение</span> —
+      колёсико к точке под курсором, на телефоне — щипок двумя пальцами.</li>
+    <li><span class="k">Открыть сон</span> — клик по звезде: справа откроется карточка сна.</li>
+    <li><span class="k">Двойной клик по пустому месту</span> — вид к центру; <span class="k">по планете</span> —
+      её сны снова встают ровной орбитой. Перетащенная звезда закрепляется и уезжает на сайт.</li>
+    <li>На новом экране сны при запуске сами вписываются в окно, если иначе их не видно.</li>
+  </ul>
+  <h3>Звёзды, планеты и нити</h3>
+  <ul>
+    <li><span class="k">Звезда</span> — сон, на ней — маленькая картина его места.</li>
+    <li><span class="k">Планета-локация</span> собирает сны одного места; у одинокого сна место подписано под ним.</li>
+    <li><span class="k">Нити</span> — родство снов: локация, персонаж, эмоция, символ, сюжет; цвета — в легенде
+      внизу слева. Кнопка <span class="btn">нити</span> прячет и возвращает их.</li>
+    <li><span class="k">Чёрная дыра</span> в углу — место, куда падают скормленные дары.</li>
+  </ul>
+</div><div class="pageno">— 5 —</div></div>
+
+<!-- 6. запись сна -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ЗАПИСЬ СНА И РАЗБОР<span class="u"></span></h2>
+  <p>В форме сна — <span class="k">название</span>, <span class="k">дата</span>, <span class="k">локация</span>
+    и текст. Локацию можно выбрать из прежних (сны соберутся у одной планеты), вписать свою или оставить
+    «определить из текста». Галочка «нарисовать картинку» — нарисовать картину места.</p>
+  <p>После записи сон разбирает ИИ на сервере, окно показывает три шага: <span class="k">толкование</span>,
+    <span class="k">картина</span> (рисуется за несколько секунд) и <span class="k">нити</span> к прежним снам.
+    Если в это время был открыт космос сновидцев, карта сама вернётся к вашим снам и покажет новый.
+    Без входа на сайт сон ложится на карту без разбора — достроить его можно позже.</p>
+
+  <h3>Карточка сна</h3>
+  <ul>
+    <li>Вверху — <span class="btn">На карте</span>, <span class="btn">Достроить</span> (толкование, картина,
+      нити, если чего-то нет) и <span class="btn">Удалить</span>. Удалённый сон исчезает и здесь, и на сайте.</li>
+    <li>Толкование, образы и нити — с переходом к связанным снам; лишнюю нить можно снять.</li>
+    <li>Щелчок по картине — сменить её: взять из прежнего сна, из файла или нарисовать заново.</li>
+    <li><span class="btn">Сменить локацию</span> и <span class="btn">Править запись</span>.</li>
+    <li><span class="k">Книги сна</span> — связанные с ним книги и PDF; щелчок открывает книгу.
+      <span class="btn">Связать с книгой</span> — откроется библиотека, щёлкните нужную книгу на любой полке.</li>
+    <li>Раздел <span class="k">«Спросить у знаков»</span> — пять гаданий (страница 9).</li>
+  </ul>
+  <p class="note">Ключ ИИ хранится только на сервере — вводить его в программу не нужно.</p>
+</div><div class="pageno">— 6 —</div></div>
+
+<!-- 7. библиотека: полки, папки -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>БИБЛИОТЕКА<span class="u"></span></h2>
+  <p>Вкладка <span class="btn">Библиотека</span> — полки трёх видов, переключатель слева вверху:</p>
+  <ul>
+    <li><span class="k">Иероглифы</span> — книги египетского письма: чтение и толкование жрецом-ИИ
+      по выбранному ключу. Иероглифы видны на любой системе — шрифт встроен в программу.</li>
+    <li><span class="k">PDF</span> — ваши книги с обложками. Обложки готовы заранее и приходят с сайта
+      маленькими картинками, поэтому полки открываются мгновенно.</li>
+    <li><span class="k">Сюита</span> — инструменты сюиты «Гермес»; скачиваются по щелчку
+      (это программы для Windows — на других системах файл просто сохраняется).</li>
+  </ul>
+  <p>Справа — панель: <span class="btn">Новая папка</span>, <span class="btn">Вставить</span> (когда в буфере
+    что-то есть), <span class="btn">Выбрать</span> и <span class="btn">Новая книга</span> или
+    <span class="btn">Добавить PDF</span>.</p>
+
+  <h3>Папки</h3>
+  <ul>
+    <li>Папки — одинаковые плитки над книгами, внутри папок — свои папки, <span class="k">без ограничения
+      глубины</span>. Новая папка заводится там, где вы сейчас.</li>
+    <li>Над полкой открытой папки — путь <span class="k">«Все полки / Папка / Подпапка»</span>: щелчок по любому
+      звену переносит туда; стрелка слева — на уровень выше.</li>
+    <li>У открытой папки — <span class="btn">Переименовать</span> и <span class="btn">Убрать папку</span>.
+      Убранная папка ничего не теряет: её книги и подпапки переезжают на уровень выше.</li>
+    <li>Папку можно перенести в другую папку: вырезать и вставить (страница 8).</li>
+  </ul>
+  <p class="note">У каждой из трёх полок папки свои. Папки живут на сайте, поэтому одинаковы на всех ваших
+    устройствах.</p>
+</div><div class="pageno">— 7 —</div></div>
+
+<!-- 8. библиотека: действия, PDF, связи -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ДЕЙСТВИЯ С КНИГАМИ<span class="u"></span></h2>
+  <p>Правая кнопка мыши (на телефоне — долгое нажатие) по книге или папке открывает меню:
+    <span class="k">Открыть, Копировать, Вырезать, Переименовать, Удалить из библиотеки</span>; по пустому месту —
+    <span class="k">Вставить</span> и <span class="k">Новая папка</span>. Вставка идёт в открытую папку.</p>
+  <ul>
+    <li><span class="k">Много сразу</span> — <span class="btn">Выбрать</span> и щелчки по книгам и папкам, или
+      Ctrl+щелчок (по одной), Shift+щелчок (всё подряд), <span class="btn">Выбрать всё</span> или Ctrl+A.</li>
+    <li>Клавиши: Ctrl+C — копировать, Ctrl+X — вырезать, Ctrl+V — вставить, Delete — удалить из библиотеки.</li>
+    <li><span class="k">Удалить из библиотеки</span> убирает книгу только из вашей библиотеки — сам файл
+      на сервере сохраняется. Стереть файл с сервера совсем может только владелец сайта.</li>
+  </ul>
+
+  <h3>PDF</h3>
+  <ul>
+    <li>Книга скачивается с сайта, когда вы впервые её открываете, — в читалке видно «скачиваю … из … МБ».
+      Дальше она лежит на устройстве и открывается без сервера, меньше чем за секунду.</li>
+    <li>Листается прокруткой; масштаб — кнопками − и + или Ctrl+колёсико. Программа помнит страницу,
+      на которой вы остановились, — на всех устройствах.</li>
+    <li><span class="btn">Добавить PDF</span> — книга сразу встаёт на полку, а на сайт уходит в фоне;
+      ход отправки виден в строке внизу.</li>
+  </ul>
+
+  <h3>Чтение и связи</h3>
+  <ul>
+    <li>В книге иероглифов: <span class="btn">Трактовать через ИИ</span>, <span class="btn">Фундамент</span>
+      (книга подпирает планету-локацию), <span class="btn">Изменить</span>, <span class="btn">В дар</span>,
+      <span class="btn">Удалить</span>.</li>
+    <li><span class="btn">Связать с книгой</span> — затем щёлкните другую книгу на любой полке;
+      <span class="btn">Отменить связывание</span> на панели — передумали.</li>
+    <li><span class="btn">Связать со сном</span> — выберите сон из списка с поиском. Связи видны под
+      названием книги и в карточке сна.</li>
+  </ul>
+</div><div class="pageno">— 8 —</div></div>
+
+<!-- 9. гадания -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ГАДАНИЯ ПОД СНОМ<span class="u"></span></h2>
+  <p>В карточке сна, в разделе <span class="k">«Спросить у знаков»</span>, — пять окон-оракулов.
+    Они не заменяют толкование, а дают иной угол взгляда на сон:</p>
+  <ul>
+    <li><span class="btn">И Цзин</span> — Книга Перемен: бросок и гексаграмма.</li>
+    <li><span class="btn">Пасьянс Медичи</span> — цепочка-программа к задуманному. Предназначение:
+      «Королевский» (побег королевы с казни), «По Реутову» (выигрыш, как в «Хакерах сновидений»),
+      разрядка зависшего, встреча с человеком, программа дня или свободный. От него зависят правила
+      свёртки и смысл карт. Трактовку можно сохранить в файл или скопировать.</li>
+    <li><span class="btn">Тональпоуалли</span> — ацтекский счёт дней: что день делает с образом сна.</li>
+    <li><span class="btn">Цитэ</span> — гадание майя: цолькин и красные семена по четыре.</li>
+    <li><span class="btn">Оби</span> — йоруба: не сонник, а проверка догадки — орех отвечает «да» или «нет».</li>
+  </ul>
+  <p>Каждое окно — в своём оформлении, на телефоне открывается на весь экран; день сна и его образ
+    берутся прямо из карточки. Закрыть — ✕ или клавиша Esc.</p>
+  <p class="note">Гадания работают на устройстве, без интернета. Это приспособления для работы со
+    сновидением, а не предсказание будущего.</p>
+</div><div class="pageno">— 9 —</div></div>
+
+<!-- 10. аккаунт, синхронизация, восстановление -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>АККАУНТ НА САЙТЕ<span class="u"></span></h2>
+  <p>Вкладка <span class="btn">Сайт</span> — вход в аккаунт dream.globthe.top. Регистрация — по инвайт-коду;
+    при регистрации стоит указать <span class="k">почту</span> — она понадобится, если забудете пароль.
+    Галочка «запомнить это устройство» — и при следующем запуске программа войдёт сама.</p>
+
+  <h3>Синхронизация — сама</h3>
+  <p>Кнопок синхронизации нет. Программа сверяется с сайтом <span class="k">при запуске</span>,
+    <span class="k">через несколько секунд после ваших правок</span> и <span class="k">раз в пять минут</span>,
+    пока открыта. Сны и нити, картины, места на карте, книги, папки, обложки и палитра ходят в обе стороны.
+    Сами PDF не скачиваются все разом — каждая книга приходит, когда вы её открываете.</p>
+
+  <h3>Забыли пароль?</h3>
+  <p>Во вкладке <span class="btn">Сайт</span> — «Забыли пароль?»: впишите логин или почту и нажмите
+    «Прислать ссылку». Письмо придёт на почту аккаунта; ссылка действует один час и только один раз —
+    по ней в браузере задаётся новый пароль. Почты в аккаунте нет — новый пароль задаст админ.
+    Почту можно указать или сменить во вкладке <span class="btn">Настройки</span>.</p>
+
+  <h3>Что ещё даёт вход</h3>
+  <ul>
+    <li>Толкование снов и книг через ИИ.</li>
+    <li><span class="k">Ларец даров</span> и <span class="k">доверие</span> — обмен книгами между сновидцами.</li>
+    <li>Вкладки <span class="btn">Космос</span> и <span class="btn">Пользователи</span> — для модераторов
+      и выше: карты своей ветви, инвайты, управление подопечными.</li>
+  </ul>
+</div><div class="pageno">— 10 —</div></div>
+
+<!-- 11. настройки, хранение, если что-то не так -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>НАСТРОЙКИ<span class="u"></span></h2>
+  <ul>
+    <li><span class="k">Оформление</span> — двадцать тёмных расцветок окна: Ночь, Киберпанк, Графит, Глубина,
+      Изумруд, Рубин, Янтарь, Сапфир, Аметист, Обсидиан, Полночь, Лес, Вулкан, Терминал, Медь, Сталь, Вино,
+      Аврора, Кофе, Сумерки. Щелчок по образцу — окно перекрашивается сразу, вместе с небом карты;
+      выбор запоминается на этом устройстве.</li>
+    <li>Личная палитра нитей и сфер, рисовать ли картинку нового сна, масштаб PDF; после входа — почта,
+      смена пароля и свой ключ ИИ. Модели ИИ выбирает только владелец сайта.</li>
+    <li>Кнопка <span class="btn">⋯</span> → «Импорт снов» — сны из файла dreams.json (копия дневника с другого
+      устройства) или перенос из прежней программы для Windows: сны, картины, планеты и PDF, один раз.</li>
+  </ul>
+
+  <h2>ХРАНЕНИЕ И ПРИВАТНОСТЬ<span class="u"></span></h2>
+  <ul>
+    <li>Данные лежат на устройстве, в папке программы, — у каждого аккаунта своя.
+      Переустановка и обновление программы их не стирают.</li>
+    <li>PDF хранятся <span class="k">зашифрованными</span>; пароль для автоматического входа — тоже.</li>
+    <li>Файлы библиотеки на сервере не пропадают: удаление убирает книгу только из вашей библиотеки.</li>
+  </ul>
+
+  <h2>ЕСЛИ ЧТО-ТО ПОШЛО НЕ ТАК<span class="u"></span></h2>
+  <ul>
+    <li>Синхронизация не удалась — причина написана в строке внизу; программа повторит сама через несколько минут.</li>
+    <li>ИИ не ответил — бывает перегрузка у поставщика модели: сервер повторит запрос сам, а если не
+      вышло — нажмите «Достроить» в карточке сна через минуту.</li>
+    <li>Не помните пароль — «Забыли пароль?» во вкладке Сайт.</li>
+    <li>Книга PDF не открывается без интернета — значит, её ещё ни разу не открывали на этом устройстве.</li>
+  </ul>
+</div><div class="pageno">— 11 —</div></div>
+
+<!-- 12. шпаргалка -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ШПАРГАЛКА<span class="u"></span></h2>
+  <div class="two">
+    <div>
+      <h3>Карта</h3>
+      <ul>
+        <li>Тащить пустое — сдвиг</li>
+        <li>Колёсико / щипок — приближение</li>
+        <li>2× по пустому — сброс вида</li>
+        <li>Тащить звезду — закрепить место</li>
+        <li>2× по планете — ровная орбита</li>
+        <li>«нити» — спрятать или вернуть</li>
+      </ul>
+      <h3>Дневник</h3>
+      <ul>
+        <li>Записать сон — новая запись</li>
+        <li>Сны — список с поиском</li>
+        <li>Достроить — разбор, картина, нити</li>
+        <li>Щелчок по картине — сменить</li>
+        <li>Связать с книгой — из карточки</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Библиотека</h3>
+      <ul>
+        <li>Правая кнопка — меню действий</li>
+        <li>Ctrl+C / X / V — копировать, вырезать, вставить</li>
+        <li>Ctrl / Shift+щелчок, Ctrl+A — выбор</li>
+        <li>Delete — удалить из библиотеки</li>
+        <li>Путь вверху — переход по папкам</li>
+        <li>PDF — своя вкладка, × закрывает</li>
+      </ul>
+      <h3>Аккаунт и вид</h3>
+      <ul>
+        <li>Сайт — вход, забыли пароль</li>
+        <li>Синхронизация — сама</li>
+        <li>Настройки — 20 расцветок</li>
+        <li>⋯ — импорт снов</li>
+      </ul>
+    </div>
+  </div>
+  <p class="epi" style="margin-top:14mm">Пусть каждый сон найдёт своё место на небе — на любом из ваших устройств.</p>
+</div><div class="pageno">— 12 —</div></div>
+
+</body></html>

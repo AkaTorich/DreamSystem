@@ -1,0 +1,107 @@
+/* Оби: чёрное поле, белый и серый (цвета и размеры из ObiWindow.xaml). */
+.oracle-win.obi {
+  --o-bg: #000000; --o-fg: #E8E8E8; --o-muted: #9A9A9A; --o-border: #444444; --o-ants: #E8E8E8;
+  --o-btn-border: #C8C8C8; --o-btn-hover: #1E1E1E; --o-font: Consolas, 'Cascadia Mono', monospace;
+}
+
+/* шапка */
+.oracle-win.obi .oracle-bar { background: #000; border-bottom-color: #444; }
+.oracle-win.obi .oracle-bar .ob-title { color: #9A9A9A; }
+.oracle-win.obi .oracle-bar .ob-sub { color: #808080; opacity: 1; }
+.oracle-win.obi .oracle-bar .ob-btns button {
+  width: 28px; height: 22px; padding: 0; font-size: 13px; color: #9A9A9A;
+  background: transparent; border: 0; border-radius: 0; animation: none; box-shadow: none;
+}
+.oracle-win.obi .oracle-bar .ob-btns button:hover { background: #1E1E1E; color: #FFFFFF; }
+
+/* кнопки: белая рамка, при наведении пульс и свечение */
+.oracle-win.obi button {
+  color: #E8E8E8; background: #000; border: 1px solid #C8C8C8; border-radius: 2px;
+  font-size: 15px; padding: 5px 10px; cursor: pointer;
+}
+.oracle-win.obi button:hover {
+  background: #1E1E1E; border-color: #FFFFFF;
+  animation: obiPulse .7s ease-in-out infinite alternate;
+}
+.oracle-win.obi button:active { background: #0E0E0E; border-color: #C8C8C8; animation: none; }
+@keyframes obiPulse {
+  from { border-color: #C8C8C8; box-shadow: 0 0 0 1px rgba(255,255,255,0); }
+  to { border-color: #FFFFFF; box-shadow: 0 0 0 1px rgba(255,255,255,.5); }
+}
+/* кнопки-заготовки вопросов */
+.oracle-win.obi button.obi-chip {
+  font-size: 12.5px; padding: 3px 8px; color: #9A9A9A; background: #000; border-color: #444;
+  margin: 0 6px 4px 0;
+}
+.oracle-win.obi button.obi-chip:hover { background: #1E1E1E; border-color: #FFFFFF; }
+
+/* поля */
+.oracle-win.obi input[type=text] {
+  background: #000; color: #E8E8E8; caret-color: #E8E8E8; border: 1px solid #444; border-radius: 0;
+  padding: 4px 6px; font-size: 14px; font-family: Consolas, 'Cascadia Mono', monospace;
+  box-sizing: border-box; min-width: 0; outline: none;
+}
+.oracle-win.obi input[type=text]:focus { border-color: #444; }
+
+/* раскладка: три ряда по содержимому, ответ — остаток */
+.oracle-win.obi .obi-layout { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.oracle-win.obi .obi-panel { border: 1px solid #444; border-radius: 3px; background: #000; min-width: 0; }
+
+.oracle-win.obi .obi-ask {
+  flex: 0 0 auto; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 0;
+}
+.oracle-win.obi .obi-field { display: flex; align-items: center; min-width: 0; }
+.oracle-win.obi .obi-field-about .obi-about { width: 220px; }
+.oracle-win.obi .obi-field-guess { flex: 1 1 200px; }
+.oracle-win.obi .obi-field-guess .obi-guess { flex: 1; width: auto; }
+.oracle-win.obi .obi-lbl { color: #9A9A9A; font-size: 12px; margin-right: 8px; white-space: nowrap; }
+.oracle-win.obi .obi-lbl-guess { margin-left: 16px; }
+.oracle-win.obi .obi-cast { margin-left: 12px; white-space: nowrap; }
+
+.oracle-win.obi .obi-presets { flex: 0 0 auto; margin-top: 8px; }
+.oracle-win.obi .obi-chips { display: flex; flex-wrap: wrap; align-items: center; }
+.oracle-win.obi .obi-ask-lbl { color: #808080; font-size: 11px; margin: 0 8px 4px 2px; }
+.oracle-win.obi .obi-glossary {
+  margin: 3px 0 0 2px; color: #808080; font-size: 11px; white-space: pre-wrap; overflow-wrap: break-word;
+}
+.oracle-win.obi .obi-term { color: #FFFFFF; }
+
+.oracle-win.obi .obi-figure {
+  flex: 0 0 auto; margin-top: 10px; padding: 14px;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px 0;
+}
+.oracle-win.obi .obi-lobes { display: flex; align-items: center; }
+.oracle-win.obi .obi-lobe { margin-right: 12px; display: flex; flex-direction: column; align-items: center; }
+.oracle-win.obi .obi-lobe-pic { display: block; }
+.oracle-win.obi .obi-lobe-cap { font-size: 10.5px; margin-top: 4px; }
+.oracle-win.obi .obi-figtext { flex: 1 1 260px; min-width: 0; margin-left: 24px; }
+.oracle-win.obi .obi-castline { color: #808080; font-size: 11px; }
+.oracle-win.obi .obi-figname { color: #E8E8E8; font-size: 30px; line-height: 1.25; }
+.oracle-win.obi .obi-figru { color: #FFFFFF; font-size: 14px; margin-top: 2px; overflow-wrap: break-word; }
+
+.oracle-win.obi .obi-answer {
+  flex: 1 1 auto; min-height: 0; margin-top: 10px; padding: 14px; display: flex; flex-direction: column;
+}
+.oracle-win.obi .obi-reading {
+  flex: 1; min-height: 0; overflow-y: auto; color: #9A9A9A; font-size: 14px; line-height: 24px;
+  white-space: pre-wrap; overflow-wrap: break-word;
+}
+
+/* телефон и узкое окно: поля друг под другом, доли над фигурой, всё листается целиком */
+@media (max-width: 760px) {
+  .oracle-win.obi .obi-layout { height: auto; }
+  .oracle-win.obi .obi-field { flex: 1 1 100%; }
+  .oracle-win.obi .obi-field .obi-lbl { width: 72px; margin-left: 0; }
+  .oracle-win.obi .obi-field-about .obi-about { flex: 1; width: auto; }
+  .oracle-win.obi .obi-cast { margin-left: 0; width: 100%; }
+  .oracle-win.obi .obi-lobe { margin-right: 8px; }
+  .oracle-win.obi .obi-figtext { flex: 1 1 100%; margin-left: 0; }
+  .oracle-win.obi .obi-answer { flex: 0 0 auto; }
+  .oracle-win.obi .obi-reading { overflow: visible; }
+}
+
+/* полосы прокрутки */
+.oracle-win.obi ::-webkit-scrollbar { width: 9px; height: 9px; }
+.oracle-win.obi ::-webkit-scrollbar-track { background: #000; }
+.oracle-win.obi ::-webkit-scrollbar-thumb { background: #444; border-radius: 0; }
+.oracle-win.obi ::-webkit-scrollbar-thumb:hover { background: #9A9A9A; }

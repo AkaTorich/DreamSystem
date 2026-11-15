@@ -1,0 +1,4 @@
+# Сайт доступен только по адресу localhost — по IP (в т.ч. из локальной сети) закрыт
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !^localhost(:\d+)?$ [NC]
+RewriteRule ^ - [F]

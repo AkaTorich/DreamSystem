@@ -1,0 +1,32 @@
+/* Каркас программы поверх site.css (палитра и кнопки — оттуда). */
+header#topbar { padding: 10px 16px; gap: 6px; }
+header#topbar button { padding: 7px 13px; font-size: 13.5px; }
+header#topbar .ico { display: none; }
+.who { font-size: 13px; padding: 3px 10px; border-radius:2px; border: 1px solid var(--border-bright);
+  background: rgba(37,28,82,.25); white-space: nowrap; }
+.who i { font-style: normal; color: #fcd34d; font-size: 11.5px; margin-left: 4px; }
+#giftBadge { color: #8fd8b8; margin-left: 2px; }
+
+/* меню ☰ */
+.menu { position: fixed; top: 54px; right: 14px; z-index: 30; min-width: 210px; padding: 6px;
+  border-radius:2px; border: 1px solid var(--border-bright); background: #1a1436f6;
+  display: flex; flex-direction: column; }
+.menu button { text-align: left; background: transparent; border-color: transparent; }
+.menu button:hover { border-color: var(--border); }
+
+/* легенда над строкой состояния */
+#legend { position: fixed; left: 16px; bottom: 40px; z-index: 10; }
+
+/* строка состояния */
+#statusbar { position: fixed; left: 0; right: 0; bottom: 0; height: 26px; z-index: 20;
+  display: flex; align-items: center; gap: 12px; padding: 0 16px;
+  background: #0b0820d9; border-top: 1px solid var(--border); font-size: 12px; color: var(--dim); }
+#statusText { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+#statusbar .sync { display: flex; align-items: center; gap: 10px; }
+#syncBar { width: 200px; height: 5px; border-radius:2px; background: #a78bfa2e; overflow: hidden; }
+#syncBar i { display: block; height: 100%; width: 0; border-radius:2px;
+  background: linear-gradient(90deg, #8b7cf8, #7dd3fc); transition: width .25s; }
+#syncPct { min-width: 38px; text-align: right; }
+
+.toast { bottom: 42px; }
+[hidden] { display: none !important; }

@@ -1,0 +1,390 @@
+﻿<Window x:Class="DreamMap.Stalkers.MediciWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Пасьянс Медичи"
+        Height="660"
+        Width="1060"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Background="#160808"
+        FontFamily="Consolas">
+    <Window.Resources>
+        <SolidColorBrush x:Key="NeonRed" Color="#FF4D4D"/>
+        <SolidColorBrush x:Key="MutedRed" Color="#FF9A7A"/>
+        <SolidColorBrush x:Key="PanelBg" Color="#1A0B0B"/>
+        <SolidColorBrush x:Key="PanelBorder" Color="#7A1C1C"/>
+        <SolidColorBrush x:Key="AccentOrange" Color="#FF8C2B"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource NeonRed}"/>
+            <Setter Property="Background" Value="#240C0C"/>
+            <Setter Property="BorderBrush" Value="{StaticResource NeonRed}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style x:Key="TitleBarButton" TargetType="Button">
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="#1A0B0B"/>
+            <Setter Property="BorderBrush" Value="#7A1C1C"/>
+            <Setter Property="Margin" Value="4,0,0,0"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="{StaticResource NeonRed}"/>
+            <Setter Property="Background" Value="{StaticResource PanelBg}"/>
+            <Setter Property="BorderBrush" Value="#7A1C1C"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CaretBrush" Value="{StaticResource NeonRed}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="6"/>
+        </Style>
+
+        <Style TargetType="ListBox">
+            <Setter Property="Foreground" Value="{StaticResource NeonRed}"/>
+            <Setter Property="Background" Value="{StaticResource PanelBg}"/>
+            <Setter Property="BorderBrush" Value="#7A1C1C"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{StaticResource MutedRed}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,2,14,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="Foreground" Value="{StaticResource MutedRed}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,2,14,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Кастомная панель заголовка -->
+        <Border Grid.Row="0"
+                Background="#1A0B0B"
+                BorderBrush="#7A1C1C"
+                BorderThickness="0,0,0,1"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="MEDICI // 00x"
+                           Foreground="{StaticResource MutedRed}"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"/>
+                <TextBlock Grid.Column="1"
+                           Text="CHAIN CALCULATOR"
+                           Foreground="{StaticResource NeonRed}"
+                           FontSize="11"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            Margin="0,0,6,0"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource TitleBarButton}"
+                            Content="—"
+                            Click="Minimize_Click"/>
+                    <Button Style="{StaticResource TitleBarButton}"
+                            Content="✕"
+                            Click="Close_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="360"/>
+                <ColumnDefinition Width="210"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Карты -->
+            <Border Grid.Column="0"
+                    CornerRadius="3"
+                    BorderBrush="{StaticResource PanelBorder}"
+                    BorderThickness="1"
+                    Background="{StaticResource PanelBg}"
+                    Padding="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="ВЫБОР КАРТ"
+                               Foreground="{StaticResource MutedRed}"
+                               FontSize="12"
+                               Margin="2,0,0,2"/>
+                    <TextBlock Grid.Row="1"
+                               Text="ЛКМ — в цель · ПКМ — в зависшее"
+                               Foreground="#B06A55"
+                               FontSize="11"
+                               Margin="2,0,0,6"/>
+                    <ScrollViewer Grid.Row="2"
+                                  VerticalScrollBarVisibility="Auto">
+                        <UniformGrid x:Name="cardGrid"
+                                     Columns="4"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- Цель и зависшее -->
+            <Grid Grid.Column="1" Margin="12,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border CornerRadius="3"
+                        BorderBrush="{StaticResource PanelBorder}"
+                        BorderThickness="1"
+                        Background="{StaticResource PanelBg}"
+                        Padding="8">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="ЦЕЛЬ"
+                                   Foreground="{StaticResource MutedRed}"
+                                   FontSize="12"
+                                   Margin="2,0,0,2"/>
+                        <TextBlock Grid.Row="1"
+                                   Text="хвост цепочки · 2ЛКМ — убрать"
+                                   Foreground="#B06A55"
+                                   FontSize="10"
+                                   Margin="2,0,0,4"/>
+                        <ListBox x:Name="finalStackList"
+                                 Grid.Row="2"
+                                 BorderThickness="0"
+                                 Background="Transparent"
+                                 MouseDoubleClick="FinalStackList_MouseDoubleClick"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="1"
+                        Margin="0,12,0,0"
+                        CornerRadius="3"
+                        BorderBrush="{StaticResource PanelBorder}"
+                        BorderThickness="1"
+                        Background="{StaticResource PanelBg}"
+                        Padding="8">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="ЗАВИСШЕЕ"
+                                   Foreground="{StaticResource MutedRed}"
+                                   FontSize="12"
+                                   Margin="2,0,0,2"/>
+                        <TextBlock Grid.Row="1"
+                                   Text="проработка · 2ЛКМ — убрать"
+                                   Foreground="#B06A55"
+                                   FontSize="10"
+                                   Margin="2,0,0,4"/>
+                        <ListBox x:Name="hungStackList"
+                                 Grid.Row="2"
+                                 BorderThickness="0"
+                                 Background="Transparent"
+                                 MouseDoubleClick="HungStackList_MouseDoubleClick"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Лог и управление -->
+            <Border Grid.Column="2"
+                    Margin="12,0,0,0"
+                    CornerRadius="3"
+                    BorderBrush="{StaticResource PanelBorder}"
+                    BorderThickness="1"
+                    Background="{StaticResource PanelBg}"
+                    Padding="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="РАСЧЁТ ЦЕПОЧКИ"
+                               Foreground="{StaticResource MutedRed}"
+                               FontSize="12"
+                               Margin="2,0,0,6"/>
+
+                    <Border Grid.Row="1"
+                            BorderBrush="#5A1616"
+                            BorderThickness="1"
+                            CornerRadius="3"
+                            Padding="8,4"
+                            Margin="0,0,0,8">
+                        <StackPanel>
+                            <TextBlock Text="ПРЕДНАЗНАЧЕНИЕ"
+                                       Foreground="{StaticResource AccentOrange}"
+                                       FontSize="11"
+                                       Margin="0,0,0,2"/>
+                            <StackPanel x:Name="purposePanel" Margin="0,0,0,4">
+                                <RadioButton x:Name="purposeGoal" GroupName="purpose" IsChecked="True"
+                                             Checked="Purpose_Changed"
+                                             Content="✔ Королевский"
+                                             ToolTip="По преданию, королева в заключении складывала этот пасьянс, чтобы уйти от казни, — метод ей передал маг. Свёртка складывает программу к цели: приветствие духа в начале, результат замыкающим звеном. Исходное толкование карт."/>
+                                <RadioButton x:Name="purposeReutov" GroupName="purpose"
+                                             Checked="Purpose_Changed"
+                                             Content="✔ По Реутову"
+                                             ToolTip="«Хакеры сновидений»: при посвящении Максиму предложили выиграть в лотерею, сложив этим пасьянсом программу к выигрышу. Приветствие + результат; карты читаются через призму удачи и выигрыша."/>
+                                <RadioButton x:Name="purposeHung" GroupName="purpose"
+                                             Checked="Purpose_Changed"
+                                             Content="○ Разрядка зависшего"
+                                             ToolTip="Адаптация механики: цель — снять застрявшее звено, а не записать новую цель. Приветствие + обязательный блок «зависшего», без результата."/>
+                                <RadioButton x:Name="purposePerson" GroupName="purpose"
+                                             Checked="Purpose_Changed"
+                                             Content="○ На встречу с человеком"
+                                             ToolTip="Адаптация: цель обязана содержать карту-персону (Валет/Дама/Король). Приветствие и результат включены."/>
+                                <RadioButton x:Name="purposeDay" GroupName="purpose"
+                                             Checked="Purpose_Changed"
+                                             Content="○ Программа дня"
+                                             ToolTip="Адаптация: цепочка мелких звеньев дня без обязательной цели и результата — «прочитать» ход дня. Только приветствие."/>
+                                <RadioButton x:Name="purposeFree" GroupName="purpose"
+                                             Checked="Purpose_Changed"
+                                             Content="○ Свободный (правила вручную)"
+                                             ToolTip="Правила свёрток задаёте сами галочками ниже."/>
+                            </StackPanel>
+                            <TextBlock Text="✔ — по Реутову · ○ — адаптация свёртки"
+                                       Foreground="#8A5A4A" FontSize="10" Margin="0,0,0,6"/>
+
+                            <TextBlock Text="АЛГОРИТМ"
+                                       Foreground="{StaticResource AccentOrange}"
+                                       FontSize="11"
+                                       Margin="0,0,0,2"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                <RadioButton x:Name="backtrackRadio"
+                                             GroupName="algo"
+                                             IsChecked="True"
+                                             Content="перебор с возвратами (правила свёрток)"
+                                             Checked="Algorithm_Changed"
+                                             ToolTip="Укладывает цепочку так, чтобы соблюдались блоки: приветствие духа, проработка зависшего, результат в хвосте."/>
+                                <RadioButton x:Name="greedyRadio"
+                                             GroupName="algo"
+                                             Content="жадный (старый)"
+                                             Checked="Algorithm_Changed"
+                                             ToolTip="Прежний расчёт: карта за картой пристраивается к голове цепочки, пока колода не кончится. Правила свёрток не учитываются — это другой инструмент."/>
+                            </StackPanel>
+
+                            <TextBlock x:Name="rulesHeader"
+                                       Text="ПРАВИЛА СВЁРТОК"
+                                       Foreground="{StaticResource AccentOrange}"
+                                       FontSize="11"
+                                       Margin="0,0,0,2"/>
+                            <StackPanel x:Name="rulesPanel">
+                            <CheckBox x:Name="greetingCheck"
+                                      IsChecked="True"
+                                      Content="1. Приветствие духа — первые три звена"
+                                      ToolTip="Первые три свёртки цепочки — мелкие, почти неизбежные события (6, 7, 8: перемещение, поглощение, общение). Они не достигают цели, а проверяют отклик и запускают программу."/>
+                            <CheckBox x:Name="hungCheck"
+                                      IsChecked="True"
+                                      Content="2. Проработка зависшего — сразу после приветствия"
+                                      ToolTip="Карты из списка «ЗАВИСШЕЕ» ставятся сплошным блоком сразу за приветствием: канал уже открыт, а цель ещё не закрыта незавершённым хвостом."/>
+                            <CheckBox x:Name="resultCheck"
+                                      IsChecked="True"
+                                      Content="3. Результат — замыкающим звеном цели"
+                                      ToolTip="Цепочка не замкнута без записанного результата: в хвост цели добавляется десятка (результат), и после неё отмечается радость от свершившегося."/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <WrapPanel Grid.Row="2" Margin="0,0,0,8">
+                        <TextBlock Text="Тасований:"
+                                   Foreground="{StaticResource MutedRed}"
+                                   VerticalAlignment="Center"/>
+                        <TextBox x:Name="shuffleTimesTextBox"
+                                 Width="50"
+                                 Margin="6,0,10,0"
+                                 Text="5"/>
+                        <Button Content="Найти цепочку"
+                                Margin="0,0,8,0"
+                                Click="FindChain_Click"/>
+                        <Button Content="Сбросить"
+                                Margin="0,0,8,0"
+                                Click="Reset_Click"/>
+                        <Button Content="Стоп"
+                                Click="Stop_Click"/>
+                        <Button Content="💾 Сохранить"
+                                FontFamily="Segoe UI, Segoe UI Emoji"
+                                Margin="12,0,8,0"
+                                Click="Export_Click"
+                                ToolTip="Сохранить трактовку-цепочку из лога в текстовый файл — чтобы скинуть или оставить на память."/>
+                        <Button Content="📋 Копировать"
+                                FontFamily="Segoe UI, Segoe UI Emoji"
+                                Click="Copy_Click"
+                                ToolTip="Скопировать всю трактовку из лога в буфер обмена."/>
+                        <TextBlock x:Name="attemptCounterText"
+                                   Text="Попыток: 0"
+                                   Margin="12,2,0,0"
+                                   Foreground="{StaticResource MutedRed}"
+                                   VerticalAlignment="Center"/>
+                    </WrapPanel>
+
+                    <TextBox x:Name="logTextBox"
+                             Grid.Row="3"
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto"
+                             BorderThickness="0"
+                             AcceptsReturn="True"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Rectangle x:Name="FrameGlowOrange"
+                   Grid.RowSpan="2"
+                   Margin="2"
+                   IsHitTestVisible="False"
+                   Stroke="#FF8C2B"
+                   StrokeThickness="1.2"
+                   StrokeDashArray="4 3"
+                   Opacity="0.7">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FF8C2B"
+                                  BlurRadius="10"
+                                  ShadowDepth="0"
+                                  Opacity="0.7"/>
+            </Rectangle.Effect>
+        </Rectangle>
+    </Grid>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard RepeatBehavior="Forever">
+                    <DoubleAnimation Storyboard.TargetName="FrameGlowOrange"
+                                     Storyboard.TargetProperty="StrokeDashOffset"
+                                     From="0"
+                                     To="-14"
+                                     Duration="0:0:2.2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+</Window>

@@ -1,0 +1,2 @@
+player.addspell 13000801
+player.addperk 13000805

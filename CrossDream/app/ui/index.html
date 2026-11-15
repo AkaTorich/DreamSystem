@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Карта снов</title>
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/mobile.css">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+<canvas id="sky"></canvas>
+<canvas id="map"></canvas>
+
+<!-- шапка: вкладки (каждая — страница на всё окно), справа — запись сна и дары -->
+<header id="topbar">
+  <div class="logo"><span class="moon">☾</span><span class="logo-text">Карта снов</span></div>
+  <nav id="tabs">
+    <button class="tab" data-tab="map" id="tabMap" title="Карта"><span class="ti" data-icon="map"></span><span class="lbl">Карта</span></button>
+    <button class="tab" data-tab="dreams" id="btnList" title="Сны"><span class="ti" data-icon="dreams"></span><span class="lbl">Сны</span></button>
+    <button class="tab" data-tab="library" id="btnLibrary" title="Библиотека"><span class="ti" data-icon="library"></span><span class="lbl">Библиотека</span></button>
+    <button class="tab" data-tab="cosmos" id="menuCosmos" title="Космос сновидцев" hidden><span class="ti" data-icon="cosmos"></span><span class="lbl">Космос</span></button>
+    <button class="tab" data-tab="users" id="menuUsers" title="Пользователи" hidden><span class="ti" data-icon="users"></span><span class="lbl">Пользователи</span></button>
+    <button class="tab" data-tab="settings" id="menuSettings" title="Настройки"><span class="ti" data-icon="settings"></span><span class="lbl">Настройки</span></button>
+    <button class="tab" data-tab="site" id="btnSite" title="Сайт"><span class="ti" data-icon="site"></span><span class="lbl">Сайт</span></button>
+  </nav>
+  <div class="spacer"></div>
+  <span class="who" id="whoChip" hidden><b id="whoName"></b> <i id="whoRole"></i></span>
+  <button class="icon" id="btnGifts" title="Ларец даров" data-icon="gift" hidden><span id="giftBadge"></span></button>
+  <button class="icon" id="btnTrust" title="Связи доверия" data-icon="trust" hidden></button>
+  <button class="primary" id="btnNew" title="Записать сон" data-icon="plus"><span class="lbl">Записать сон</span></button>
+  <button class="icon" id="btnMore" title="Ещё" data-icon="more"></button>
+</header>
+
+<div id="moreMenu" class="menu" hidden>
+  <button id="menuImport">Импорт снов из прежней программы</button>
+</div>
+
+<div id="legend" hidden></div>
+<div id="panels"></div>     <!-- боковые панели: сон, список, форма -->
+<div id="overlays"></div>   <!-- всплывающие окна: библиотека, гадания, настройки… -->
+
+<footer id="statusbar">
+  <span id="statusText">сайт не подключён</span>
+  <span class="sync"><span id="syncBar" hidden><i></i></span><span id="syncPct" hidden></span></span>
+</footer>
+<div id="toast" class="toast" hidden></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

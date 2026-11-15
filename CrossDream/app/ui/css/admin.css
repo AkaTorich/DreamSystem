@@ -1,0 +1,53 @@
+/* Управление: пользователи, инвайты, дары, доверие, космос. */
+.cd-grow { flex: 1; min-width: 0; }
+.cd-inline { display: flex; gap: 8px; margin-top: 10px; }
+.cd-inline input { flex: 1; min-width: 0; }
+
+/* дары и доверие */
+.cd-gift { cursor: default; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+.cd-gift-face { flex: 0 0 38px; font-size: 26px; text-align: center; }
+.cd-gift-face img { width: 38px; height: 38px; object-fit: contain; }
+.cd-gift-descr { font-size: 12px; color: var(--faint); line-height: 1.45; margin-top: 3px; }
+.cd-gift-btns { margin-left: auto; display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+
+/* пользователи: строка ужимается в два-три ряда на узком экране */
+.cd-user { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 10px; padding: 8px 0;
+  border-bottom: 1px solid var(--border); }
+.cd-user-main { display: flex; gap: 7px; flex: 1 1 300px; min-width: 0; }
+.cd-user-main input { flex: 1; min-width: 0; }
+.cd-user-main select, .cd-user-main .cd-role { flex: 0 0 130px; text-align: center; }
+.cd-user-info { display: flex; gap: 10px; }
+.cd-user-info .n { color: var(--faint); font-size: 12.5px; white-space: nowrap; }
+.cd-user-btns { display: flex; gap: 4px; margin-left: auto; }
+.cd-user-btns button { padding: 7px 10px; }
+.cd-user.banned input { opacity: .45; text-decoration: line-through; }
+
+/* инвайты */
+.cd-invite { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.cd-invite .n { flex: 1; color: var(--faint); font-size: 12.5px; min-width: 0; }
+.cd-code { letter-spacing: 1px; color: #8fd8b8; cursor: pointer; min-width: 120px; }
+.cd-code.used { color: var(--faint); cursor: default; }
+
+/* космос: строка над картой и список сновидцев */
+#cosmosBar { position: fixed; top: 58px; left: 50%; transform: translateX(-50%); z-index: 12;
+  display: flex; align-items: center; gap: 6px; max-width: calc(100vw - 24px);
+  background: var(--panel); border: 1px solid var(--border-bright); border-radius:2px;
+  padding: 5px 6px 5px 14px; }
+#cosmosBar button { padding: 6px 11px; font-size: 13px; }
+.cd-cosmos-title { font-family: Georgia, serif; color: #cabefc; white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; min-width: 0; }
+#dreamers { top: 110px; z-index: 11; }
+#dreamers .sect { margin: 4px 6px 8px; }
+#linkbar { top: 110px; max-width: calc(100vw - 24px); }
+
+@media (max-width: 760px) {
+  .cd-user-main { flex-basis: 100%; }
+  .cd-user-main select, .cd-user-main .cd-role { flex-basis: 110px; }
+  .cd-user-btns button { padding: 9px 11px; }
+  .cd-gift-btns { width: 100%; }
+  .cd-gift-btns button { padding: 9px 12px; }
+  #cosmosBar { top: 54px; padding-left: 10px; }
+  .cd-cosmos-title { font-size: 13px; }
+  #dreamers { top: 104px; right: 8px; left: 8px; width: auto; max-height: 40vh; }
+  #linkbar { top: 104px; }
+}

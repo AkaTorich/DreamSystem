@@ -1,0 +1,62 @@
+# Сборки
+bin/
+obj/
+build/
+dist/
+out/
+sites/
+*.exe
+*.dll
+*.pdb
+*.pyc
+__pycache__/
+HieroMod/dreammap/
+
+# Мусор
+*.zip
+.vs/
+.vscode/
+*.user
+*.suo
+*.log
+*.tmp
+*.bak
+*.bak-*
+~$*
+Thumbs.db
+HieroMod/ffdec_check/
+
+# Чужие моды Skyrim (свои — Египетские иероглифы, Мир без вражды, Призрачный страж)
+HieroMod/mods_pack/Alternate Start*/
+HieroMod/mods_pack/Artaum*/
+HieroMod/mods_pack/Peaceful Living/
+HieroMod/mods_pack/Unofficial Skyrim Special Edition Patch*/
+
+# Чужое: файлы игры и сторонние инструменты
+HieroMod/extracted/
+HieroMod/tools/BSABrowser/
+HieroMod/tools/PapyrusCompiler/
+Soft/Защита/Themida/
+
+# Пароли, ключи и сертификаты
+Soft/Защита/Сертификат/
+Soft/Защита/Сервер лицензий/ДОСТУПЫ.txt
+Soft/Защита/Сервер лицензий/данные/
+Soft/Защита/Сервер лицензий/.claude/
+Soft/Защита/VMShield/Мой бессрочный ключ.txt
+*.pfx
+
+# Загрузки пользователей сайта
+dreamweb/uploads/files/*
+dreamweb/uploads/pdf/*
+!dreamweb/uploads/**/.htaccess
+
+# Бэкапы сайта и базы — только у себя, не на GitHub
+Бэкапы/
+
+# PDF в репозиторий не кладутся (лежат только на компьютере)
+*.pdf
+*.PDF
+
+# готовые выпуски — только на компьютере
+Soft/

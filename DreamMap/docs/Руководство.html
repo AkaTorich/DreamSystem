@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; background: #0E0A20; }
+  body { font-family: Georgia, "PT Serif", serif; color: #D8D2EC; }
+
+  .page { position: relative; width: 210mm; height: 297mm; background: #0E0A20;
+    page-break-after: always; overflow: hidden; }
+  .page:last-child { page-break-after: auto; }
+  .frame { position: absolute; top: 9mm; left: 9mm; right: 9mm; bottom: 9mm;
+    border: 0.35mm solid rgba(139,124,248,.6); padding: 13mm 15mm; }
+  /* внутренняя тонкая линия — рамка двойная */
+  .frame::before { content: ""; position: absolute; top: 1.3mm; left: 1.3mm; right: 1.3mm; bottom: 1.3mm;
+    border: 0.2mm solid rgba(139,124,248,.28); pointer-events: none; }
+  /* звёздочки по углам рамки */
+  .frame .c { position: absolute; width: 4mm; height: 4mm; line-height: 4mm; text-align: center;
+    font-size: 8.5pt; color: #A99BFA; background: #0E0A20; font-style: normal; }
+  .frame .tl { top: -2.1mm; left: -2.1mm; }   .frame .tr { top: -2.1mm; right: -2.1mm; }
+  .frame .bl { bottom: -2.1mm; left: -2.1mm; } .frame .br { bottom: -2.1mm; right: -2.1mm; }
+  /* обложка: небо до края, без рамки */
+  .cover .frame { border: none; }
+  .cover .frame::before { display: none; }
+  .sky { position: absolute; left: 0; top: 0; width: 210mm; height: 297mm; }
+  .pageno { position: absolute; left: 0; right: 0; bottom: 4.2mm; text-align: center;
+    color: #6A5FA0; font-size: 10pt; letter-spacing: 2px; }
+
+  h1.cover { color: #CABEFC; font-size: 50pt; font-weight: 700; letter-spacing: 4px;
+    text-align: center; margin: 78mm 0 0; }
+  .moon { text-align:center; font-size: 34pt; color:#9370FF; margin: 4mm 0 0; }
+  .sub { text-align: center; font-style: italic; font-size: 15.5pt; color: #D8D2EC; margin: 10mm 0 0; }
+  .rule { width: 46mm; height: 1px; background: #8B7CF8; margin: 7mm auto 0; opacity: .8; }
+  .epi { text-align: center; font-size: 13pt; color: #9A90C9; line-height: 1.6;
+    margin: 12mm auto 0; max-width: 130mm; }
+  .imprint { position: absolute; left: 0; right: 0; bottom: 20mm; text-align: center;
+    color: #8B7CF8; font-size: 10.5pt; letter-spacing: 2px; }
+
+  h2 { color: #CABEFC; font-size: 16pt; font-weight: 700; letter-spacing: .5px; margin: 8mm 0 0; }
+  h2:first-child { margin-top: 0; }
+  h2 .u { display: block; width: 20mm; height: 1px; background: #8B7CF8; margin-top: 2.2mm; opacity: .7; }
+  h3 { color: #B6A9E8; font-size: 12.5pt; margin: 5mm 0 0; }
+  p { font-size: 11.6pt; line-height: 1.55; margin: 3mm 0 0; text-align: justify; }
+  ul { margin: 3mm 0 0; padding: 0; list-style: none; }
+  li { font-size: 11.4pt; line-height: 1.5; margin: 2.4mm 0 0; padding-left: 7mm; position: relative;
+    text-align: justify; }
+  li::before { content: "✦"; position: absolute; left: 0.5mm; color: #8B7CF8; font-size: 8pt; top: 1.2mm; }
+  .k { color: #CABEFC; font-weight: 700; }
+  .btn { color:#B6A9E8; font-weight:700; white-space:nowrap; }
+  .note { color:#9A90C9; font-style:italic; font-size: 11pt; }
+  .two { display: flex; gap: 8mm; }
+  .two > div { flex: 1; }
+</style></head>
+<body>
+
+<!-- 1. обложка -->
+<div class="page cover">
+  <svg class="sky" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+  <radialGradient id="n0"><stop offset="0" stop-color="#2B1E6B" stop-opacity=".35"/><stop offset=".35" stop-color="#2B1E6B" stop-opacity=".2"/><stop offset=".6" stop-color="#2B1E6B" stop-opacity=".09"/><stop offset=".82" stop-color="#2B1E6B" stop-opacity=".03"/><stop offset="1" stop-color="#2B1E6B" stop-opacity="0"/></radialGradient>
+  <radialGradient id="n1"><stop offset="0" stop-color="#123A52" stop-opacity=".35"/><stop offset=".35" stop-color="#123A52" stop-opacity=".2"/><stop offset=".6" stop-color="#123A52" stop-opacity=".09"/><stop offset=".82" stop-color="#123A52" stop-opacity=".03"/><stop offset="1" stop-color="#123A52" stop-opacity="0"/></radialGradient>
+  <radialGradient id="n2"><stop offset="0" stop-color="#4A1D5E" stop-opacity=".35"/><stop offset=".35" stop-color="#4A1D5E" stop-opacity=".2"/><stop offset=".6" stop-color="#4A1D5E" stop-opacity=".09"/><stop offset=".82" stop-color="#4A1D5E" stop-opacity=".03"/><stop offset="1" stop-color="#4A1D5E" stop-opacity="0"/></radialGradient>
+  </defs>
+  <circle cx="57.8" cy="53.2" r="63.8" fill="url(#n0)"/>
+  <circle cx="172.2" cy="205.4" r="56.7" fill="url(#n1)"/>
+  <circle cx="109.2" cy="207.6" r="39.7" fill="url(#n2)"/>
+  <circle cx="152.16" cy="278.41" r="0.52" fill="#CFD8FF" fill-opacity="0.65"/>
+  <circle cx="104.84" cy="42.16" r="0.35" fill="#CFD8FF" fill-opacity="0.37"/>
+  <circle cx="48.97" cy="245.80" r="0.22" fill="#CFD8FF" fill-opacity="0.57"/>
+  <circle cx="162.81" cy="9.86" r="0.35" fill="#CFD8FF" fill-opacity="0.82"/>
+  <circle cx="85.53" cy="203.16" r="0.47" fill="#CFD8FF" fill-opacity="0.37"/>
+  <circle cx="127.98" cy="264.88" r="0.19" fill="#CFD8FF" fill-opacity="0.57"/>
+  <circle cx="143.13" cy="58.25" r="0.50" fill="#CFD8FF" fill-opacity="0.86"/>
+  <circle cx="72.81" cy="46.24" r="0.13" fill="#CFD8FF" fill-opacity="0.94"/>
+  <circle cx="149.33" cy="240.07" r="0.17" fill="#CFD8FF" fill-opacity="0.79"/>
+  <circle cx="81.00" cy="124.02" r="0.31" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="48.81" cy="29.64" r="0.40" fill="#CFD8FF" fill-opacity="0.83"/>
+  <circle cx="24.40" cy="266.43" r="0.31" fill="#CFD8FF" fill-opacity="0.53"/>
+  <circle cx="64.12" cy="39.59" r="0.49" fill="#CFD8FF" fill-opacity="0.96"/>
+  <circle cx="169.25" cy="55.35" r="0.13" fill="#CFD8FF" fill-opacity="0.83"/>
+  <circle cx="2.85" cy="32.59" r="0.25" fill="#CFD8FF" fill-opacity="0.95"/>
+  <circle cx="165.24" cy="256.65" r="0.28" fill="#CFD8FF" fill-opacity="0.87"/>
+  <circle cx="140.19" cy="162.13" r="0.34" fill="#CFD8FF" fill-opacity="0.79"/>
+  <circle cx="46.37" cy="185.60" r="0.46" fill="#CFD8FF" fill-opacity="0.96"/>
+  <circle cx="74.29" cy="45.91" r="0.47" fill="#CFD8FF" fill-opacity="0.32"/>
+  <circle cx="25.32" cy="175.47" r="0.27" fill="#CFD8FF" fill-opacity="0.89"/>
+  <circle cx="112.09" cy="56.01" r="0.44" fill="#CFD8FF" fill-opacity="0.74"/>
+  <circle cx="180.59" cy="105.26" r="0.49" fill="#CFD8FF" fill-opacity="0.50"/>
+  <circle cx="168.23" cy="83.09" r="0.45" fill="#CFD8FF" fill-opacity="0.42"/>
+  <circle cx="171.79" cy="115.54" r="0.30" fill="#CFD8FF" fill-opacity="0.41"/>
+  <circle cx="46.22" cy="35.78" r="0.20" fill="#CFD8FF" fill-opacity="0.29"/>
+  <circle cx="0.88" cy="294.44" r="0.32" fill="#CFD8FF" fill-opacity="0.98"/>
+  <circle cx="44.07" cy="80.02" r="0.15" fill="#CFD8FF" fill-opacity="0.93"/>
+  <circle cx="169.24" cy="157.63" r="0.41" fill="#CFD8FF" fill-opacity="0.92"/>
+  <circle cx="55.01" cy="223.59" r="0.45" fill="#CFD8FF" fill-opacity="0.28"/>
+  <circle cx="101.09" cy="132.53" r="0.47" fill="#CFD8FF" fill-opacity="0.30"/>
+  <circle cx="184.02" cy="280.09" r="0.35" fill="#CFD8FF" fill-opacity="0.63"/>
+  <circle cx="185.93" cy="197.07" r="0.20" fill="#CFD8FF" fill-opacity="0.35"/>
+  <circle cx="93.53" cy="59.80" r="0.52" fill="#CFD8FF" fill-opacity="0.75"/>
+  <circle cx="102.55" cy="236.02" r="0.38" fill="#CFD8FF" fill-opacity="0.21"/>
+  <circle cx="96.91" cy="202.24" r="0.18" fill="#CFD8FF" fill-opacity="0.56"/>
+  <circle cx="99.48" cy="6.03" r="0.24" fill="#CFD8FF" fill-opacity="0.24"/>
+  <circle cx="193.16" cy="116.08" r="0.16" fill="#CFD8FF" fill-opacity="0.24"/>
+  <circle cx="104.53" cy="123.22" r="0.25" fill="#CFD8FF" fill-opacity="0.87"/>
+  <circle cx="57.12" cy="19.47" r="0.30" fill="#CFD8FF" fill-opacity="0.61"/>
+  <circle cx="148.43" cy="229.79" r="0.48" fill="#CFD8FF" fill-opacity="0.44"/>
+  <circle cx="183.62" cy="116.43" r="0.19" fill="#CFD8FF" fill-opacity="0.30"/>
+  <circle cx="22.23" cy="107.59" r="0.23" fill="#CFD8FF" fill-opacity="0.66"/>
+  <circle cx="60.91" cy="98.57" r="0.45" fill="#CFD8FF" fill-opacity="0.35"/>
+  <circle cx="97.67" cy="126.85" r="0.42" fill="#CFD8FF" fill-opacity="0.28"/>
+  <circle cx="128.93" cy="152.45" r="0.39" fill="#CFD8FF" fill-opacity="0.78"/>
+  <circle cx="34.27" cy="103.11" r="0.13" fill="#CFD8FF" fill-opacity="0.64"/>
+  <circle cx="69.46" cy="55.95" r="0.29" fill="#CFD8FF" fill-opacity="0.65"/>
+  <circle cx="112.47" cy="242.83" r="0.27" fill="#CFD8FF" fill-opacity="0.30"/>
+  <circle cx="54.33" cy="173.98" r="0.25" fill="#CFD8FF" fill-opacity="0.53"/>
+  <circle cx="141.24" cy="255.68" r="0.20" fill="#CFD8FF" fill-opacity="0.57"/>
+  <circle cx="144.29" cy="167.13" r="0.46" fill="#CFD8FF" fill-opacity="0.48"/>
+  <circle cx="154.64" cy="194.23" r="0.23" fill="#CFD8FF" fill-opacity="0.52"/>
+  <circle cx="170.18" cy="218.59" r="0.24" fill="#CFD8FF" fill-opacity="0.95"/>
+  <circle cx="23.37" cy="211.06" r="0.39" fill="#CFD8FF" fill-opacity="0.21"/>
+  <circle cx="12.46" cy="141.00" r="0.34" fill="#CFD8FF" fill-opacity="0.90"/>
+  <circle cx="151.16" cy="83.36" r="0.21" fill="#CFD8FF" fill-opacity="0.67"/>
+  <circle cx="166.56" cy="132.28" r="0.37" fill="#CFD8FF" fill-opacity="0.85"/>
+  <circle cx="147.91" cy="213.51" r="0.42" fill="#CFD8FF" fill-opacity="0.79"/>
+  <circle cx="25.81" cy="115.46" r="0.26" fill="#CFD8FF" fill-opacity="0.42"/>
+  <circle cx="57.97" cy="5.70" r="0.45" fill="#CFD8FF" fill-opacity="0.90"/>
+  <circle cx="46.84" cy="129.21" r="0.23" fill="#CFD8FF" fill-opacity="0.67"/>
+  <circle cx="204.26" cy="271.63" r="0.24" fill="#CFD8FF" fill-opacity="0.33"/>
+  <circle cx="122.48" cy="51.73" r="0.16" fill="#CFD8FF" fill-opacity="0.87"/>
+  <circle cx="62.58" cy="228.55" r="0.14" fill="#CFD8FF" fill-opacity="0.54"/>
+  <circle cx="161.72" cy="37.39" r="0.32" fill="#CFD8FF" fill-opacity="0.62"/>
+  <circle cx="161.89" cy="189.18" r="0.22" fill="#CFD8FF" fill-opacity="0.43"/>
+  <circle cx="27.04" cy="105.29" r="0.40" fill="#CFD8FF" fill-opacity="0.72"/>
+  <circle cx="207.28" cy="89.68" r="0.11" fill="#CFD8FF" fill-opacity="0.69"/>
+  <circle cx="76.24" cy="100.83" r="0.18" fill="#CFD8FF" fill-opacity="0.58"/>
+  <circle cx="193.49" cy="286.81" r="0.44" fill="#CFD8FF" fill-opacity="0.47"/>
+  <circle cx="12.76" cy="182.72" r="0.18" fill="#CFD8FF" fill-opacity="0.93"/>
+  <circle cx="33.72" cy="56.11" r="0.41" fill="#CFD8FF" fill-opacity="0.31"/>
+  <circle cx="5.93" cy="60.22" r="0.32" fill="#CFD8FF" fill-opacity="0.47"/>
+  <circle cx="51.30" cy="145.28" r="0.38" fill="#CFD8FF" fill-opacity="0.89"/>
+  <circle cx="142.75" cy="139.85" r="0.33" fill="#CFD8FF" fill-opacity="0.25"/>
+  <circle cx="86.12" cy="221.55" r="0.44" fill="#CFD8FF" fill-opacity="0.98"/>
+  <circle cx="97.59" cy="80.02" r="0.22" fill="#CFD8FF" fill-opacity="0.28"/>
+  <circle cx="35.24" cy="291.75" r="0.33" fill="#CFD8FF" fill-opacity="0.90"/>
+  <circle cx="37.29" cy="253.50" r="0.47" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="111.70" cy="237.59" r="0.33" fill="#CFD8FF" fill-opacity="0.53"/>
+  <circle cx="202.33" cy="210.60" r="0.29" fill="#CFD8FF" fill-opacity="0.65"/>
+  <circle cx="184.84" cy="225.04" r="0.44" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="1.94" cy="91.18" r="0.25" fill="#CFD8FF" fill-opacity="0.23"/>
+  <circle cx="102.86" cy="105.78" r="0.27" fill="#CFD8FF" fill-opacity="0.45"/>
+  <circle cx="179.64" cy="233.91" r="0.35" fill="#CFD8FF" fill-opacity="0.25"/>
+  <circle cx="37.04" cy="82.75" r="0.31" fill="#CFD8FF" fill-opacity="0.20"/>
+  <circle cx="82.59" cy="178.62" r="0.34" fill="#CFD8FF" fill-opacity="0.45"/>
+  <circle cx="68.20" cy="274.87" r="0.34" fill="#CFD8FF" fill-opacity="0.46"/>
+  <circle cx="30.96" cy="278.42" r="0.43" fill="#CFD8FF" fill-opacity="0.90"/>
+  <circle cx="68.11" cy="283.28" r="0.48" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="78.67" cy="53.46" r="0.42" fill="#CFD8FF" fill-opacity="0.27"/>
+  <circle cx="143.84" cy="103.18" r="0.37" fill="#CFD8FF" fill-opacity="0.88"/>
+  <circle cx="160.33" cy="236.78" r="0.35" fill="#CFD8FF" fill-opacity="0.63"/>
+  <circle cx="185.01" cy="106.16" r="0.32" fill="#CFD8FF" fill-opacity="0.25"/>
+  <circle cx="180.31" cy="134.79" r="0.18" fill="#CFD8FF" fill-opacity="0.23"/>
+  <circle cx="186.28" cy="265.62" r="0.24" fill="#CFD8FF" fill-opacity="0.63"/>
+  <circle cx="208.22" cy="159.66" r="0.30" fill="#CFD8FF" fill-opacity="0.70"/>
+  <circle cx="30.42" cy="277.64" r="0.11" fill="#CFD8FF" fill-opacity="0.87"/>
+  <circle cx="152.07" cy="52.61" r="0.52" fill="#CFD8FF" fill-opacity="0.76"/>
+  <circle cx="98.52" cy="5.74" r="0.21" fill="#CFD8FF" fill-opacity="0.30"/>
+  <circle cx="205.20" cy="5.05" r="0.26" fill="#CFD8FF" fill-opacity="0.82"/>
+  <circle cx="181.14" cy="286.96" r="0.35" fill="#CFD8FF" fill-opacity="0.91"/>
+  <circle cx="99.36" cy="11.21" r="0.38" fill="#CFD8FF" fill-opacity="0.81"/>
+  <circle cx="75.54" cy="149.64" r="0.38" fill="#CFD8FF" fill-opacity="0.88"/>
+  <circle cx="149.12" cy="41.90" r="0.32" fill="#CFD8FF" fill-opacity="0.57"/>
+  <circle cx="199.95" cy="168.18" r="0.14" fill="#CFD8FF" fill-opacity="0.64"/>
+  <circle cx="23.07" cy="40.74" r="0.36" fill="#CFD8FF" fill-opacity="0.92"/>
+  <circle cx="205.94" cy="3.54" r="0.50" fill="#CFD8FF" fill-opacity="0.68"/>
+  <circle cx="125.31" cy="155.81" r="0.14" fill="#CFD8FF" fill-opacity="0.79"/>
+  <circle cx="12.43" cy="291.15" r="0.38" fill="#CFD8FF" fill-opacity="0.75"/>
+  <circle cx="119.98" cy="19.81" r="0.52" fill="#CFD8FF" fill-opacity="0.99"/>
+  <circle cx="193.17" cy="203.16" r="0.40" fill="#CFD8FF" fill-opacity="0.68"/>
+  <circle cx="32.94" cy="98.83" r="0.33" fill="#CFD8FF" fill-opacity="0.34"/>
+  <circle cx="67.94" cy="161.42" r="0.19" fill="#CFD8FF" fill-opacity="0.51"/>
+  <circle cx="108.63" cy="34.88" r="0.33" fill="#CFD8FF" fill-opacity="1.00"/>
+  <circle cx="190.89" cy="189.77" r="0.14" fill="#CFD8FF" fill-opacity="0.51"/>
+  <circle cx="52.20" cy="100.73" r="0.19" fill="#CFD8FF" fill-opacity="0.77"/>
+  <circle cx="25.94" cy="115.38" r="0.21" fill="#CFD8FF" fill-opacity="0.81"/>
+  <circle cx="57.49" cy="173.95" r="0.29" fill="#CFD8FF" fill-opacity="0.97"/>
+  <circle cx="72.14" cy="182.57" r="0.18" fill="#CFD8FF" fill-opacity="0.95"/>
+  <circle cx="36.38" cy="5.09" r="0.51" fill="#CFD8FF" fill-opacity="0.26"/>
+  <circle cx="201.42" cy="2.23" r="0.12" fill="#CFD8FF" fill-opacity="0.95"/>
+  <circle cx="152.17" cy="18.82" r="0.41" fill="#CFD8FF" fill-opacity="0.71"/>
+  <circle cx="76.00" cy="204.48" r="0.41" fill="#CFD8FF" fill-opacity="0.31"/>
+  <circle cx="177.18" cy="19.74" r="0.14" fill="#CFD8FF" fill-opacity="0.68"/>
+  <circle cx="25.04" cy="205.57" r="0.22" fill="#CFD8FF" fill-opacity="0.26"/>
+  <circle cx="120.44" cy="113.90" r="0.47" fill="#CFD8FF" fill-opacity="0.69"/>
+  <circle cx="169.77" cy="249.85" r="0.29" fill="#CFD8FF" fill-opacity="0.72"/>
+  <circle cx="149.12" cy="137.64" r="0.28" fill="#CFD8FF" fill-opacity="0.39"/>
+  <circle cx="67.63" cy="44.82" r="0.14" fill="#CFD8FF" fill-opacity="0.71"/>
+  <circle cx="24.23" cy="254.29" r="0.38" fill="#CFD8FF" fill-opacity="0.77"/>
+  <circle cx="110.46" cy="2.67" r="0.28" fill="#CFD8FF" fill-opacity="0.71"/>
+  <circle cx="19.10" cy="198.30" r="0.50" fill="#CFD8FF" fill-opacity="0.20"/>
+  <circle cx="56.08" cy="210.71" r="0.37" fill="#CFD8FF" fill-opacity="0.44"/>
+  <circle cx="196.29" cy="83.97" r="0.18" fill="#CFD8FF" fill-opacity="0.34"/>
+  <circle cx="98.59" cy="25.70" r="0.27" fill="#CFD8FF" fill-opacity="0.86"/>
+  <circle cx="155.05" cy="130.15" r="0.21" fill="#CFD8FF" fill-opacity="0.26"/>
+  </svg>
+<div class="frame">
+  <div class="moon">☾</div>
+  <h1 class="cover">КАРТА СНОВ</h1>
+  <div class="sub">дневник сновидений, где каждый сон становится звездой</div>
+  <div class="rule"></div>
+  <div class="epi">Записывайте сны — программа сама сплетает их в живую карту:
+    по местам, людям, чувствам и символам. Толкует, связывает и хранит.</div>
+  <div class="imprint">РУКОВОДСТВО ПОЛЬЗОВАТЕЛЯ</div>
+</div><div class="pageno">— 1 —</div></div>
+
+<!-- 2. что это и первый запуск -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ЧТО ЭТО ЗА ПРОГРАММА<span class="u"></span></h2>
+  <p>«Карта снов» — дневник сновидений с живой картой-небом. Каждый записанный сон
+    становится звездой; сны, снившиеся в одном месте, кружат вокруг общей планеты-локации;
+    родственные сны сами тянут друг к другу нити. Со временем из отдельных записей
+    вырастает ваш личный космос.</p>
+  <p>Программа работает <span class="k">локально</span>: сны и книги хранятся на вашем
+    компьютере. Толкование снов через ИИ, синхронизация между устройствами, «космос» из
+    нескольких сновидцев и обмен книгами появляются, когда вы входите в аккаунт на сайте
+    (кнопка <span class="btn">⛅ Сайт</span>) — но вести дневник и связывать сны по местам
+    можно и без интернета.</p>
+
+  <h2>ПЕРВЫЙ ЗАПУСК<span class="u"></span></h2>
+  <ul>
+    <li>Нажмите <span class="btn">✦ Записать первый сон</span> в центре пустого неба.</li>
+    <li>Впишите название, дату и текст сна. Сохраните — на карте загорится первая звезда.</li>
+    <li>Каждый следующий сон добавляйте кнопкой <span class="btn">✦ Записать сон</span>
+      в верхней панели.</li>
+  </ul>
+  <p class="note">Верхняя панель — главное меню: «Записать сон», «Сны» (список),
+    «📚 Библиотека», «⛅ Сайт», а после входа в аккаунт — «🎁» дары и «🤝» доверие.
+    Реже нужное собрано в меню <b>☰</b>: «Космос сновидцев» и «Пользователи» (модераторам
+    и выше), «Импорт снов», «Настройки». Внизу окна — строка состояния: в ней видно,
+    как идёт синхронизация с сайтом.</p>
+</div><div class="pageno">— 2 —</div></div>
+
+<!-- 3. карта и навигация -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>КАРТА И НАВИГАЦИЯ<span class="u"></span></h2>
+  <p>Небо — это ваша карта. По ней двигаются мышью:</p>
+  <ul>
+    <li><span class="k">Перетаскивание пустого места</span> — сдвигает карту вверх/вниз/
+      вправо/влево. Хватать можно в любой точке окна.</li>
+    <li><span class="k">Колёсико мыши</span> — приближает и отдаляет к точке под курсором.</li>
+    <li><span class="k">Двойной клик по пустому месту</span> — возвращает вид к центру
+      и обычному масштабу.</li>
+  </ul>
+
+  <h3>Звёзды, планеты и нити</h3>
+  <ul>
+    <li><span class="k">Фиолетовая звезда</span> — сон. Клик по ней открывает запись.</li>
+    <li><span class="k">Бирюзовый кружок</span> — планета-локация (место, где снился сон).
+      Он мельче звёзд; сны этого места кружат вокруг него. Планета появляется, когда ей
+      есть кого собирать — <span class="k">два и больше снов</span> в одном месте или
+      книга-фундамент под ним; у одинокого сна место просто подписано под ним голубым.</li>
+    <li><span class="k">Нити</span> между звёздами — родство снов: общая локация, персонаж,
+      эмоция, символ или сюжет (цвета показаны в легенде внизу слева). Первым пунктом
+      легенды стоит глаз <span class="k">👁 нити</span>: клик по нему убирает нити с карты,
+      повторный возвращает. Прячется только вид — сами связи целы и держат карту, как
+      держали. То же самое есть и на сайте.</li>
+  </ul>
+
+  <h3>Расстановка вручную</h3>
+  <ul>
+    <li>Перетащите звезду — и её место закрепится (это ваша авторская позиция; она
+      сохраняется и, при входе в аккаунт, уезжает на сайт).</li>
+    <li><span class="k">Двойной клик по планете-локации</span> — возвращает её спутники
+      на ровную орбиту, стирая ручную расстановку этих снов.</li>
+  </ul>
+  <p class="note">Личный вид карты (масштаб и сдвиг) запоминается и синхронизируется
+    с вашим аккаунтом — на другом устройстве карта откроется так же.</p>
+</div><div class="pageno">— 3 —</div></div>
+
+<!-- 4. запись сна и разбор -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ЗАПИСЬ СНА И РАЗБОР<span class="u"></span></h2>
+  <p>В форме сна есть <span class="k">НАЗВАНИЕ СНА</span>, <span class="k">ДАТА</span>,
+    <span class="k">ЛОКАЦИЯ</span> и текст. Локация — короткое имя места (до трёх слов):
+    именно по ней сны собираются вокруг общей планеты.</p>
+  <p>Открыв записанный сон, вы увидите его карточку. Два поля — <span class="k">запись</span>
+    и <span class="k">локацию</span> — можно править прямо здесь, кнопками-карандашами.</p>
+
+  <p>Кнопка <span class="k">🗑</span> удаляет сон совсем. Если вы вошли в аккаунт, он
+    стирается и на сайте — разом в обоих местах. Когда связи с сайтом в тот миг нет,
+    программа так и скажет: сон удалён здесь, а на сайте — при следующей связи; обратно
+    синхронизация его уже не притащит.</p>
+
+  <h3>Толкование через ИИ</h3>
+  <p>Если вы вошли в аккаунт (<span class="btn">⛅ Сайт</span>), сон можно разобрать: ИИ
+    на сервере выделит из текста <span class="k">место, людей, чувства, символы и сюжет</span>,
+    предложит короткое имя локации и, при желании, нарисует картину места. Эти метки и
+    рождают нити между снами. Ключ ИИ живёт только на сервере — вам его вводить не нужно.</p>
+
+  <h3>Связи между снами</h3>
+  <p>Сны связываются автоматически по общим меткам. Можно связывать и вручную — через
+    карточку сна; такие нити видны на карте и помогают собрать сюжет, тянущийся из сна в сон.</p>
+  <p class="note">Без входа в аккаунт ИИ недоступен, но вы всё равно можете задавать локацию
+    руками — и сны одного места сами станут спутниками одной планеты.</p>
+</div><div class="pageno">— 4 —</div></div>
+
+<!-- 5. библиотека -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>БИБЛИОТЕКА<span class="u"></span></h2>
+  <p>Кнопка <span class="btn">📚 Библиотека</span> открывает полки с тремя вкладками:</p>
+  <ul>
+    <li><span class="k">𓏛 Иероглифы</span> — книги египетского письма (из мода «Писец»):
+      чтение и толкование жрецом-ИИ по выбранному ключу.</li>
+    <li><span class="k">📕 PDF</span> — ваши PDF-книги. Обложка каждой — её первая страница;
+      открываются в защищённой читалке (текст не копируется).</li>
+    <li><span class="k">⚙ Сюита</span> — инструменты сюиты «Гермес» и гадания (И-Цзин,
+      Медичи, Оби, «Алхимия Эмоции» и другие). Скачиваются по клику.</li>
+  </ul>
+  <p>Под шапкой — сколько вещей на полке; где они лежат на диске, подскажет наведение
+    на эту строку. Значок <span class="btn">📂</span> справа открывает другой books.json.</p>
+
+  <h3>Папки</h3>
+  <p>Книги, PDF и продукты сюиты можно раскладывать по <span class="k">папкам</span>: у каждой
+    вкладки папки свои. Заведите папку карточкой «➕ Новая папка», перетащите — точнее,
+    кнопкой «☑ Выбрать» отметьте несколько книг и «Переложите» их разом. Внутри папки —
+    кнопки переименования и удаления (при удалении содержимое возвращается на общую полку).</p>
+
+  <h3>Чтение и трактовка</h3>
+  <ul>
+    <li>Иероглифическую книгу можно <span class="k">☥ Трактовать через ИИ</span>, выбрав
+      <span class="k">ключ</span> толкования — он задаёт жанр и угол перевода.</li>
+    <li>В читалке книги есть кнопки: 🪐 фундамент (книга подпирает планету-локацию),
+      🔗 связать с другой книгой, ✏ изменить, 🎁 подарить, 🗑 удалить.</li>
+    <li>PDF запоминает последнюю открытую страницу — в следующий раз откроется на ней.</li>
+  </ul>
+  <p class="note">Тяжёлые PDF при самом первом открытии рисуются небыстро, зато затем
+    «отснятые» страницы берутся из кеша мгновенно.</p>
+</div><div class="pageno">— 5 —</div></div>
+
+<!-- 6. гадания -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ГАДАНИЯ ПОД СНОМ<span class="u"></span></h2>
+  <p>В карточке сна, в разделе <span class="k">«Спросить у знаков»</span>, живут пять
+    самостоятельных окон-оракулов. Они не заменяют толкование, а дают иной угол взгляда на сон:</p>
+  <ul>
+    <li><span class="btn">☯ И Цзин</span> — Книга Перемен: бросок монет и гексаграмма.</li>
+    <li><span class="btn">🂠 Пасьянс Медичи</span> — цепочка-программа к задуманному.
+      В нём выбирается <span class="k">предназначение</span>: «Королевский» (побег королевы
+      с казни — по преданию, метод ей передал маг), «По Реутову» (выигрыш, как в «Хакерах
+      сновидений»), разрядка зависшего, встреча с человеком, программа дня или свободный.
+      От предназначения зависят и правила свёртки, и смысл карт. Готовую трактовку можно
+      сохранить в файл (💾) или скопировать (📋), чтобы отправить или оставить на память.</li>
+    <li><span class="btn">𖤍 Тональпоуалли</span> — ацтекский счёт дней: что день делает
+      с образом сна.</li>
+    <li><span class="btn">◈ Цитэ</span> — гадание майя: цолькин и красные семена по четыре.</li>
+    <li><span class="btn">◐ Оби</span> — йоруба: не сонник, а проверка догадки —
+      орех отвечает «да/нет».</li>
+  </ul>
+  <p>Каждое окно открывается поверх карты и работает само по себе; день сна и его образ
+    некоторые из них берут прямо из карточки. У каждого гадания есть свой PDF-толковник
+    с историей метода и тем, как его применяли ко снам.</p>
+  <p class="note">Гадания работают локально, без интернета. Это приспособления для работы
+    со сновидением, а не предсказание будущего.</p>
+</div><div class="pageno">— 6 —</div></div>
+
+<!-- 7. аккаунт и космос -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>АККАУНТ НА САЙТЕ<span class="u"></span></h2>
+  <p>Кнопка <span class="btn">⛅ Сайт</span> — вход в аккаунт. Регистрация только по
+    инвайт-коду. Что даёт вход:</p>
+  <ul>
+    <li><span class="k">Толкование через ИИ</span> снов и книг (ключ хранится на сервере).</li>
+    <li><span class="k">Синхронизацию</span> снов, книг, PDF и вида карты между устройствами —
+      тихо, при запуске и после операций с книгами. В обе стороны ходят и
+      <span class="k">нити между снами</span>, и <span class="k">картины локаций</span>:
+      чего нет на одной стороне, то берётся с другой. Ход виден в строке состояния внизу
+      окна: что делается сейчас и полоса с процентами; в конце — «✓ синхронизировано»
+      со временем, при сбое — «⚠» с причиной.</li>
+    <li><span class="k">✦ Космос сновидцев</span> (меню ☰, модераторам и выше) — карта из
+      нескольких сновидцев: клик по сновидцу открывает его карту.</li>
+    <li><span class="k">🎁 Дары</span> и <span class="k">🤝 Доверие</span> — обмен книгами
+      между сновидцами. Дар ложится в «ларец» получателя и принимается им.</li>
+  </ul>
+
+  <h3>Иерархия (род)</h3>
+  <p>Кто пригласил вас по инвайту — тот ваш куратор; кого пригласили вы — ваша ветвь. Вы
+    видите и ведёте только свою ветвь. Раздел <span class="btn">☰ → Пользователи</span> (для
+    модераторов и выше) — управление своими подопечными и инвайтами.</p>
+  <p class="note">Данные каждого аккаунта на одном компьютере хранятся отдельно — сны разных
+    участников не смешиваются. Выход из аккаунта («⛅ Сайт») оставляет ваши записи на месте,
+    но отключает ИИ и космос до следующего входа.</p>
+</div><div class="pageno">— 7 —</div></div>
+
+<!-- 8. настройки, импорт, приватность -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>НАСТРОЙКИ И ИМПОРТ<span class="u"></span></h2>
+  <ul>
+    <li><span class="btn">☰ → Настройки</span> — личная палитра (цвета нитей и сфер),
+      масштаб чтения PDF и прочее. Выбор модели ИИ доступен только владельцу сайта —
+      остальные работают той же моделью.</li>
+    <li><span class="btn">☰ → Импорт снов</span> — перенос снов из файла <span class="k">dreams.json</span>
+      (копии дневника с другого компьютера).</li>
+    <li>Свернуть, переключить «окно / весь экран» и закрыть — кнопками справа вверху
+      (—, 🗖, ✕). Во весь экран программа занимает всё, кроме панели задач Windows —
+      та остаётся на виду.</li>
+  </ul>
+
+  <h2>ХРАНЕНИЕ И ПРИВАТНОСТЬ<span class="u"></span></h2>
+  <ul>
+    <li>Сны, книги, картинки и настройки лежат на вашем компьютере, в профиле вашего
+      аккаунта.</li>
+    <li>PDF-книги хранятся <span class="k">зашифрованными</span>: копия файла на другой
+      машине бесполезна без вашего ключа.</li>
+    <li>Ключ ИИ и выбор модели живут только на сервере и вам не показываются.</li>
+  </ul>
+
+  <h2>ЕСЛИ ЧТО-ТО ПОШЛО НЕ ТАК<span class="u"></span></h2>
+  <ul>
+    <li>ИИ не отвечает — проверьте вход в аккаунт (⛅ Сайт) и связь; попробуйте ещё раз.</li>
+    <li>Книга с сайта не появилась — нажмите синхронизацию (она идёт и сама при запуске)
+      и посмотрите строку состояния внизу: если там «⚠», в ней же написана причина.</li>
+    <li>Тяжёлый PDF долго открывается впервые — это разовая работа; дайте полке
+      постоять, страницы «отснимутся» в фон, и дальше открытие мгновенно.</li>
+  </ul>
+</div><div class="pageno">— 8 —</div></div>
+
+<!-- 9. шпаргалка -->
+<div class="page"><div class="frame"><i class="c tl">✦</i><i class="c tr">✦</i><i class="c bl">✦</i><i class="c br">✦</i>
+  <h2>ШПАРГАЛКА<span class="u"></span></h2>
+  <div class="two">
+    <div>
+      <h3>Карта</h3>
+      <ul>
+        <li>Тащить пусто́е — сдвиг карты</li>
+        <li>Колёсико — зум к курсору</li>
+        <li>2× по пустому — сброс вида</li>
+        <li>Тащить звезду — закрепить место</li>
+        <li>2× по планете — ровная орбита</li>
+        <li>Клик по звезде — открыть сон</li>
+      </ul>
+      <h3>Дневник</h3>
+      <ul>
+        <li>✦ Записать сон — новая запись</li>
+        <li>Сны — список всех снов</li>
+        <li>Локация — собирает сны у планеты</li>
+        <li>✏ — правка записи и локации</li>
+        <li>🗑 — удалить сон (и на сайте)</li>
+        <li>👁 нити — спрятать или вернуть нити</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Библиотека</h3>
+      <ul>
+        <li>𓏛 / 📕 / ⚙ — книги, PDF, сюита</li>
+        <li>➕ Новая папка · ☑ Выбрать</li>
+        <li>📂 — другой books.json</li>
+        <li>☥ Трактовать — толкование ИИ</li>
+        <li>🪐 🔗 ✏ 🎁 🗑 — в читалке книги</li>
+      </ul>
+      <h3>Аккаунт</h3>
+      <ul>
+        <li>⛅ Сайт — вход, синхронизация, ИИ</li>
+        <li>🎁 дары · 🤝 доверие</li>
+        <li>☰ — космос, пользователи, импорт, настройки</li>
+        <li>Строка внизу — ход синхронизации</li>
+      </ul>
+    </div>
+  </div>
+  <p class="epi" style="margin-top:14mm">Пусть каждый сон найдёт своё место на небе.</p>
+</div><div class="pageno">— 9 —</div></div>
+
+</body></html>

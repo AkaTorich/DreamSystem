@@ -1,0 +1,41 @@
+/* Расцветки окна. Сами цвета ставит js/shell/themes.js (двадцать наборов в themes-data.js)
+   переменными на <html>; здесь — запасная «Ночь» на первые мгновения запуска и общие правила,
+   которые берут цвета из переменных. Все расцветки тёмные. */
+
+:root {
+  --bg:#070512; --panel:#181332; --border:#2c2554; --border-bright:#463c82;
+  --text:#e9e4fa; --dim:#9a90c9; --faint:#655d8f; --accent:#a78bfa; --glow:rgba(167,139,250,.3); --danger:#f87171;
+  --surface:#120e26; --surface-2:#181332; --surface-3:#201a42; --line:#2c2554; --line-2:#463c82;
+  --accent-2:#8b7cf8; --accent-ink:#cfc7f2; --header:#0d0a1f; --input:#0c0920;
+  --primary:#4a3fa0; --primary-hi:#5547b4; --primary-line:#6a5cd0; --on-primary:#ffffff;
+  --gold:#e8dcb4; --gold-icon:#d9b866; --tab-on:#201a42; --picked:rgba(167,139,250,.16); --logo:#a78bfa;
+  --label:#cfc7f2; --label-sub:#7dd3fc;
+}
+body { background: var(--bg); }
+
+/* общие места, где в site.css были вписаны свои цвета */
+.logo { color: var(--logo); }
+.det-title { color: var(--text); }
+.det-summary { color: var(--dim); border-left-color: var(--accent); }
+.det-text { color: var(--dim); }
+.chip { background: var(--surface-3); color: var(--text); border-color: var(--line); }
+.chip.loc { color: var(--label-sub); border-color: var(--line-2); }
+.dream-card { background: var(--surface-2); }
+.dream-card:hover, .link-row:hover { background: var(--surface-3); border-color: var(--line-2); }
+.dream-card .t { color: var(--text); }
+.dream-card img, .dream-card .noimg { background: var(--surface-3); }
+.sect { color: var(--faint); }
+#legend { background: var(--surface); border-color: var(--line); color: var(--dim); }
+.toast { background: var(--surface-2); color: var(--text); border-color: var(--line-2); }
+::-webkit-scrollbar-thumb { background: var(--line-2); }
+.who { background: var(--surface-2); border-color: var(--line); }
+.who b { color: var(--text); }
+.who i, .who .r-owner, .who .r-admin, .who .r-moder, .who .r-user { color: var(--gold); }
+
+/* ---------- образцы расцветок в «Настройках» ---------- */
+.cd-themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 6px; margin-top: 4px; }
+.cd-theme { flex-direction: column; align-items: stretch; gap: 5px; padding: 5px; min-height: 0; }
+.cd-theme .sw { display: flex; height: 26px; border: 1px solid rgba(0, 0, 0, .3); }
+.cd-theme .sw i { flex: 1; }
+.cd-theme .nm { font-size: 12px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cd-theme.on { outline: 2px solid var(--accent); outline-offset: -1px; }

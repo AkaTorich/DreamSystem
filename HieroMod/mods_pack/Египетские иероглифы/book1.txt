@@ -1,0 +1,1 @@
+player.additem 0F000800 1

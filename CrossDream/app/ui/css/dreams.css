@@ -1,0 +1,68 @@
+/* Дневник: панели, форма записи, список, карточка, окна. Основа — из site.css. */
+
+/* панели: над строкой состояния, кнопки шапки панели в ряд */
+.cd-drawer { bottom: 26px; }
+.cd-drawer .head { padding-top: 14px; }
+.cd-drawer .head h2 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cd-tools { display: flex; gap: 2px; }
+.cd-tools button, .cd-drawer .head > button { padding: 7px 10px; }
+
+/* общие окна */
+.cd-ov .modal { overscroll-behavior: contain; }
+.cd-gap { height: 10px; }
+.cd-ask { font-size: 14px; margin-top: 8px; }
+.cd-choices { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.cd-danger { background: linear-gradient(135deg, #a33b4f, #7a2638); border-color: #e07a8a; }
+.cd-wide { width: 100%; }
+.cd-result { margin-top: 12px; min-height: 18px; }
+.cd-small { padding: 4px 9px; font-size: 12px; margin-top: 6px; }
+.note.cd-ok, .cd-ok { color: #8fd8b8; }
+
+/* форма нового сна */
+.cd-form textarea { min-height: 170px; }
+.cd-form .combo + input { margin-top: 6px; }
+.cd-hint { color: var(--faint); font-size: 11.5px; margin-top: 5px; }
+
+/* список снов */
+.cd-search { margin: 4px 0 12px; }
+.cd-card-text { min-width: 0; }
+.cd-empty-note { color: var(--faint); margin-top: 18px; }
+
+/* карточка */
+.cd-det-img { cursor: pointer; border-radius:2px; }
+.cd-det-img .det-img { display: block; max-height: 300px; object-fit: cover; }
+.cd-noimg { height: 90px; border-radius:2px; border: 1px dashed var(--border-bright); color: var(--dim);
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+  background: radial-gradient(circle at 30% 30%, #2b2158, #120d2a); }
+.cd-link-title { color: var(--text); font-size: 13px; }
+.link-row { flex-wrap: wrap; }
+.det-text .hi { font-size: 1.6em; line-height: 1.15; vertical-align: middle; }
+.cd-oracles { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; }
+.cd-oracles button { padding: 8px 12px; font-family: 'Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif; }
+.cd-edit-text { font-family: 'Segoe UI Historic', 'Segoe UI', sans-serif; }
+
+/* выбор картины */
+.cd-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;
+  margin-top: 14px; max-height: 46vh; overflow-y: auto; }
+.cd-gal-item { cursor: pointer; }
+.cd-gal-pic { height: 96px; border-radius:2px; border: 1px solid var(--border);
+  background: #120d2a center / cover no-repeat; transition: border-color .2s; }
+.cd-gal-item:hover .cd-gal-pic { border-color: var(--border-bright); }
+.cd-gal-cap { font-size: 11.5px; color: var(--dim); margin-top: 4px; overflow: hidden;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+/* окно хода разбора */
+.cd-pipe { text-align: center; }
+.cd-pipe-stars { font-size: 26px; color: #cabefc; margin-bottom: 14px; }
+.cd-pipe-row { display: flex; gap: 10px; align-items: flex-start; margin: 8px 0; font-size: 14.5px; text-align: left; }
+.cd-pipe-row .pmark { width: 20px; flex-shrink: 0; text-align: center; }
+.cd-pipe-note { font-size: 12px; color: var(--faint); }
+.cd-pipe .mrow { justify-content: center; }
+
+@media (max-width: 760px) {
+  .cd-tools button, .cd-drawer .head > button { padding: 9px 11px; font-size: 16px; }
+  .cd-small { padding: 8px 12px; font-size: 13px; }
+  .cd-oracles button { flex: 1 1 calc(50% - 8px); }
+  .cd-gallery { grid-template-columns: repeat(2, 1fr); }
+  .link-row .del { padding: 4px 8px; font-size: 15px; }
+}

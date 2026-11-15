@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "CrossDream",
+  "version": "0.1.0",
+  "identifier": "top.globthe.crossdream",
+  "build": {
+    "frontendDist": "ui"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "Карта снов",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 360,
+        "minHeight": 520,
+        "center": true,
+        "decorations": true,
+        "dragDropEnabled": false
+      }
+    ],
+    "security": {
+      "csp": null,
+      "assetProtocol": {
+        "enable": true,
+        "scope": {
+          "allow": ["$APPDATA/**", "$APPLOCALDATA/**", "$APPCACHE/**"],
+          "requireLiteralLeadingDot": false
+        }
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "category": "Lifestyle",
+    "shortDescription": "Дневник снов с картой, библиотекой и гаданиями",
+    "copyright": "O.V.K",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "nsis": {
+        "languages": ["Russian", "English"],
+        "displayLanguageSelector": false,
+        "installMode": "currentUser"
+      }
+    },
+    "linux": {
+      "deb": {
+        "depends": ["fonts-noto-color-emoji", "fonts-noto-core"]
+      }
+    },
+    "android": {
+      "minSdkVersion": 24
+    },
+    "iOS": {
+      "minimumSystemVersion": "14.0"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+/* Страницы вкладок: окна областей открываются не поверх карты, а на всё окно под шапкой
+   (переключает js/shell/tabs.js). Маленькие вопросы «да/нет» и ввод строки — по-прежнему окошками. */
+
+/* сами страницы */
+#cdLeft, #cdSettings, #cdSite, #cdUsers, #cdGifts, #cdTrust, #cdImport,
+#overlays > .lib-ov, #overlays > .lib-read-ov, #overlays > .pdf-ov, #overlays > .lib-form-ov {
+  position: fixed; left: 0; right: 0; top: var(--top-h); bottom: var(--status-h);
+  width: auto; max-width: none; z-index: 30;
+  background: var(--surface); border: none; box-shadow: none; transform: none;
+}
+#cdLeft { display: none; flex-direction: column; }
+#cdLeft.open { display: flex; }
+#cdLeft .head, #cdLeft .body { width: 100%; max-width: 980px; margin: 0 auto; }
+#overlays > .cd-ov#cdSettings, #overlays > .cd-ov#cdSite, #overlays > .cd-ov#cdUsers,
+#overlays > .cd-ov#cdGifts, #overlays > .cd-ov#cdTrust, #overlays > .cd-ov#cdImport {
+  align-items: stretch; justify-content: center; overflow-y: auto;
+}
+/* содержимое страниц-форм — колонкой посередине, а не растянутыми полями */
+#cdSettings > .modal, #cdSite > .modal, #cdUsers > .modal, #cdGifts > .modal, #cdTrust > .modal, #cdImport > .modal {
+  width: 100% !important; max-width: 820px; max-height: none; height: max-content; min-height: 100%;
+  border: none; border-left: 1px solid var(--line); border-right: 1px solid var(--line);
+  box-shadow: none; background: var(--surface); padding: 18px 24px 28px;
+}
+#cdSite > .modal, #cdSettings > .modal { max-width: 620px; }
+
+/* библиотека и читальни — во всю ширину */
+#overlays > .lib-ov, #overlays > .lib-read-ov, #overlays > .pdf-ov, #overlays > .lib-form-ov {
+  align-items: stretch; justify-content: stretch;
+}
+#overlays > .lib-ov > .lib-win, #overlays > .lib-read-ov > *, #overlays > .pdf-ov > .pdf-win, #overlays > .lib-form-ov > * {
+  width: 100%; max-width: none; height: 100%; max-height: none; margin: 0;
+  border: none; border-radius: 0; box-shadow: none; background: var(--surface);
+}
+/* читальни лежат поверх библиотеки — на ступень выше */
+#overlays > .lib-read-ov, #overlays > .pdf-ov, #overlays > .lib-form-ov { z-index: 31; }
+
+/* карточка сна — справа поверх любой страницы */
+#cdRight { z-index: 35; }
+
+/* под страницей карта не нужна: не рисуется и не показывается */
+body.paged #map, body.paged #legend, body.paged #blackHole, body.paged #cosmosBar, body.paged #dreamers { visibility: hidden; }
+
+@media (max-width: 760px) {
+  #cdSettings > .modal, #cdSite > .modal, #cdUsers > .modal, #cdGifts > .modal, #cdTrust > .modal, #cdImport > .modal {
+    border: none; padding: 14px 12px 24px;
+  }
+}
+
+/* отступы под системную строку телефона страницам не нужны — они и так под шапкой */
+#cdLeft, #cdSettings, #cdSite, #cdUsers, #cdGifts, #cdTrust, #cdImport,
+#overlays > .lib-ov, #overlays > .lib-read-ov, #overlays > .pdf-ov, #overlays > .lib-form-ov { padding-top: 0; padding-bottom: 0; }
+
+/* книга на своей вкладке: ушли на другую — читалка ждёт спрятанной, с той же страницей */
+#overlays > .pdf-ov.parked { display: none !important; }
+#tabs .pdftab { max-width: 260px; border-left: 1px solid var(--line); }
+#tabs .pdftab .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+#tabs .pdftab .x { display: flex; padding: 2px; margin-left: 2px; color: var(--faint); }
+#tabs .pdftab .x:hover { color: var(--text); background: var(--surface-3); }
+
+/* сайт без входа: только форма входа посреди неба — ни шапки, ни карты, ни вкладок (js/account/site.js) */
+body.cd-gate #topbar, body.cd-gate #map, body.cd-gate #legend, body.cd-gate #blackHole, body.cd-gate #empty,
+body.cd-gate #panels, body.cd-gate #statusbar, body.cd-gate #cosmosBar, body.cd-gate #dreamers,
+body.cd-gate #moreMenu, body.cd-gate #overlays > :not(#cdSite):not(.lib-dialog):not(#cdAsk):not(#cdText) { display: none !important; }
+body.cd-gate #overlays > .cd-ov#cdSite { top: 0; bottom: 0; background: transparent; align-items: center; justify-content: center; }
+body.cd-gate #cdSite > .modal { width: 420px !important; max-width: calc(100vw - 24px); min-height: 0; height: auto;
+  border: 1px solid var(--line-2); box-shadow: 0 20px 60px rgba(0, 0, 0, .5); padding: 22px 24px 18px; }
+body.cd-gate #cdSite > .modal h2 { font-size: 24px; text-align: center; color: var(--logo); }

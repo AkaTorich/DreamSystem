@@ -1,0 +1,99 @@
+/* И Цзин: неоново-зелёная консоль (цвета и размеры из IChingWindow.xaml). */
+.oracle-win.iching {
+  --o-bg: #0B0F0B; --o-fg: #39FF14; --o-muted: #5CFF9E; --o-border: #1A5C2C; --o-ants: #39FF14;
+  --o-btn-border: #39FF14; --o-btn-hover: #142418; --o-font: Consolas, 'Cascadia Mono', monospace;
+}
+
+/* шапка: тёмная полоса, кнопки «—» «✕» в рамке */
+.oracle-win.iching .oracle-bar { background: #0A120C; border-bottom-color: #1A5C2C; }
+.oracle-win.iching .oracle-bar .ob-title { color: #5CFF9E; }
+.oracle-win.iching .oracle-bar .ob-sub { color: #2AFF7A; opacity: 1; }
+.oracle-win.iching .oracle-bar .ob-btns button {
+  width: 36px; height: 24px; margin-left: 4px; padding: 0; font-size: 12px; color: #39FF14;
+  background: #0A120C; border: 1px solid #1A5C2C; border-radius: 2px; animation: none;
+}
+.oracle-win.iching .oracle-bar .ob-btns button:hover { background: #152419; border-color: #5CFF9E; box-shadow: none; }
+.oracle-win.iching .oracle-bar .ob-btns button:active { background: #0A120C; border-color: #39FF14; }
+
+/* кнопки: неон, при наведении пульс рамки и свечение */
+.oracle-win.iching button {
+  color: #39FF14; background: #0F1B12; border: 1px solid #39FF14; border-radius: 2px;
+  font-size: 16px; padding: 4px 8px; cursor: pointer;
+}
+.oracle-win.iching button:hover {
+  background: #142418; border-color: #5CFF9E;
+  animation: icPulse .6s ease-in-out infinite alternate;
+}
+.oracle-win.iching button:active { background: #0C150E; border-color: #39FF14; animation: none; }
+@keyframes icPulse {
+  from { border-color: #39FF14; box-shadow: 0 0 0 1px rgba(57,255,20,0); }
+  to { border-color: #5CFF9E; box-shadow: 0 0 0 1px rgba(57,255,20,.5); }
+}
+
+/* раскладка: заголовок 48, консоль 176 (+8), рисунок — остаток */
+.oracle-win.iching .ic-layout { position: relative; display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.oracle-win.iching .ic-panel {
+  border: 1px solid #1A5C2C; border-radius: 3px; background: #0A120C; min-width: 0;
+}
+.oracle-win.iching .ic-head {
+  flex: 0 0 48px; box-sizing: border-box; padding: 0 10px;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px;
+}
+.oracle-win.iching .ic-name { color: #5CFF9E; font-size: 18px; font-weight: bold; }
+.oracle-win.iching .ic-ver { color: #5CFF9E; font-size: 12px; margin-top: 6px; }
+.oracle-win.iching .ic-gen { margin-left: auto; }
+
+.oracle-win.iching .ic-label { color: #5CFF9E; font-size: 12px; line-height: 16px; margin: 8px 0 0 10px; }
+
+.oracle-win.iching .ic-console {
+  flex: 0 0 176px; box-sizing: border-box; margin-top: 8px;
+  display: flex; flex-direction: column;
+}
+.oracle-win.iching textarea.ic-result {
+  flex: 1; min-height: 0; margin: 6px 8px 8px 8px; width: auto; box-sizing: border-box;
+  padding: 8px; border: 0; border-radius: 0; outline: none; resize: none;
+  background: #0A120C; color: #39FF14; caret-color: #39FF14;
+  font-family: Consolas, 'Cascadia Mono', monospace; font-size: 14px; line-height: normal;
+  white-space: pre-wrap; overflow-wrap: break-word;
+}
+.oracle-win.iching textarea.ic-result:hover { border: 0; }
+.oracle-win.iching textarea.ic-result:focus { background: #0E1810; border: 0; }
+
+/* поле рисунка: картинка вписывается в ячейку целиком, прижата влево-вверх */
+.oracle-win.iching .ic-display {
+  flex: 1 1 auto; min-height: 0; margin-top: 8px; position: relative;
+  display: flex; flex-direction: column; box-sizing: border-box;
+}
+.oracle-win.iching .ic-display::after {
+  content: ''; position: absolute; inset: 24px 6px 6px 6px; pointer-events: none;
+  border: 1px solid #112818; opacity: .6;
+}
+.oracle-win.iching .ic-pics {
+  flex: 1; min-height: 0; margin: 0 8px 8px 8px;
+  display: flex; flex-wrap: nowrap; align-items: flex-start; justify-content: flex-start;
+}
+.oracle-win.iching .ic-pics svg.ic-pic { display: block; height: 100%; width: auto; max-width: none; }
+
+/* полоска-блик по верху содержимого, как прозрачный прямоугольник в XAML */
+.oracle-win.iching .ic-scan {
+  position: absolute; inset: 0; pointer-events: none; opacity: .08;
+  background: linear-gradient(to bottom, #fff 0 2%, #000 2% 100%);
+}
+
+/* полосы прокрутки: тёмная дорожка, зелёный ползунок */
+.oracle-win.iching ::-webkit-scrollbar { width: 12px; height: 12px; }
+.oracle-win.iching ::-webkit-scrollbar-track { background: #0A120C; }
+.oracle-win.iching ::-webkit-scrollbar-track:hover { background: #0E1810; }
+.oracle-win.iching ::-webkit-scrollbar-thumb { background: #1A5C2C; border: 1px solid #1A5C2C; border-radius: 0; }
+.oracle-win.iching ::-webkit-scrollbar-thumb:hover { background: #5CFF9E; }
+.oracle-win.iching ::-webkit-scrollbar-thumb:active { background: #39FF14; }
+
+/* телефон и узкое окно: панели по высоте содержимого, рисунок — два куска друг под другом */
+@media (max-width: 760px) {
+  .oracle-win.iching .ic-layout { height: auto; }
+  .oracle-win.iching .ic-head { flex: 0 0 auto; min-height: 48px; padding: 6px 10px; }
+  .oracle-win.iching .ic-console { flex: 0 0 auto; height: 176px; }
+  .oracle-win.iching .ic-display { flex: 0 0 auto; min-height: 120px; }
+  .oracle-win.iching .ic-pics { flex-direction: column; margin-top: 8px; }
+  .oracle-win.iching .ic-pics svg.ic-pic { width: 100%; height: auto; }
+}

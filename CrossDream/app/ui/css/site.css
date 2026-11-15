@@ -1,0 +1,304 @@
+:root{
+  --bg:#070512; --panel:rgba(22,17,46,.62); --panel-solid:#141029;
+  --border:rgba(150,130,255,.18); --border-bright:rgba(170,150,255,.45);
+  --text:#e9e4fa; --dim:#9a90c9; --faint:#655d8f;
+  --accent:#a78bfa; --glow:rgba(147,112,255,.35); --danger:#f87171;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%; overflow:hidden}
+body{background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; font-size:15px}
+h1,h2,h3,.serif{font-family:Georgia,serif; font-weight:600}
+
+/* canvas — replaced element: inset сам по себе его не растягивает */
+#sky{position:fixed; inset:0; width:100%; height:100%; z-index:0}
+#map{position:fixed; inset:0; width:100%; height:100%; z-index:1}
+
+button,.btn{
+  font-family:inherit; font-size:14px; color:var(--text); cursor:pointer; text-decoration:none;
+  background:var(--panel); border:1px solid var(--border); border-radius:2px;
+  padding:9px 16px; transition:.2s; display:inline-block;
+}
+button:hover,.btn:hover{border-color:var(--border-bright); box-shadow:0 0 18px var(--glow)}
+.primary{background:linear-gradient(135deg,#6d5bd0,#4f46a3); border-color:#8b7cf8; font-weight:700}
+.ghost{background:transparent; border-color:transparent; color:var(--dim)}
+.ghost:hover{color:var(--text); box-shadow:none; border-color:var(--border)}
+.danger{color:var(--danger)}
+button:disabled{opacity:.45; cursor:default; box-shadow:none}
+
+header{
+  position:fixed; top:0; left:0; right:0; z-index:10;
+  display:flex; align-items:center; gap:10px; padding:13px 22px;
+  background:linear-gradient(180deg,rgba(10,7,24,.85),transparent);
+}
+.logo{font-family:Georgia,serif; font-size:24px; color:#cabefc; display:flex; gap:9px; align-items:center; user-select:none}
+.logo .moon{filter:drop-shadow(0 0 8px var(--glow))}
+.spacer{flex:1}
+
+label{display:block; font-size:12px; color:var(--dim); margin:14px 0 5px; letter-spacing:.4px}
+input[type=text],input[type=password],input[type=date],textarea,select{
+  width:100%; font-family:inherit; font-size:14px; color:var(--text);
+  background:rgba(8,5,20,.6); border:1px solid var(--border); border-radius:2px;
+  padding:10px 13px; outline:none; transition:.2s;
+}
+input:focus,textarea:focus,select:focus{border-color:var(--border-bright)}
+/* кастомный выпадающий список (родной select не стилизуется) */
+.combo{position:relative; user-select:none}
+.combo-head{background:rgba(8,5,20,.6); border:1px solid var(--border); border-radius:2px;
+  padding:10px 34px 10px 13px; cursor:pointer; font-size:14px; color:var(--text);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.combo-head::after{content:'▾'; position:absolute; right:12px; top:50%;
+  transform:translateY(-50%); color:var(--dim); font-size:12px}
+.combo:hover .combo-head,.combo.open .combo-head{border-color:var(--border-bright)}
+.combo-list{position:absolute; left:0; right:0; top:calc(100% + 5px); z-index:60; display:none;
+  max-height:260px; overflow-y:auto; background:#141029; border:1px solid var(--border-bright);
+  border-radius:2px; padding:4px; box-shadow:0 18px 50px rgba(0,0,0,.55)}
+.combo.open .combo-list{display:block}
+.combo-item{padding:8px 11px; border-radius:2px; cursor:pointer; font-size:13.5px; color:#cfc7f2}
+.combo-item:hover{background:rgba(147,112,255,.15)}
+.combo-item.sel{background:rgba(147,112,255,.28)}
+
+input[type=file]{
+  width:100%; color:var(--dim); font-size:13px; font-family:inherit;
+  background:rgba(8,5,20,.6); border:1px solid var(--border); border-radius:2px;
+  padding:8px 10px; cursor:pointer;
+}
+input[type=file]::file-selector-button{
+  font-family:inherit; font-size:13px; color:var(--text); cursor:pointer;
+  background:linear-gradient(135deg,#6d5bd0,#4f46a3); border:1px solid #8b7cf8;
+  border-radius:2px; padding:7px 14px; margin-right:12px; transition:.2s;
+}
+input[type=file]::file-selector-button:hover{box-shadow:0 0 14px var(--glow)}
+/* автозаполнение браузера не должно перекрашивать поля в белый */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 1000px #0d0a1f inset;
+  -webkit-text-fill-color:var(--text);
+  caret-color:var(--text);
+  border:1px solid var(--border);
+  transition:background-color 99999s ease-in-out 0s;
+}
+textarea{min-height:150px; resize:vertical; line-height:1.55}
+select option{background:#141029; color:var(--text)}
+input[type=checkbox]{width:auto}
+
+::-webkit-scrollbar{width:9px; height:9px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.05)}
+::-webkit-scrollbar-thumb{background:rgba(150,130,255,.25); border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:rgba(170,150,255,.5)}
+
+.drawer{
+  position:fixed; top:0; bottom:0; width:430px; max-width:94vw; z-index:20;
+  background:linear-gradient(160deg,rgba(26,20,54,.94),rgba(14,10,32,.96));
+ border-right:1px solid var(--border);
+  border-radius:0; box-shadow:24px 0 60px rgba(0,0,0,.45);
+  transform:translateX(-105%); transition:transform .3s ease; display:flex; flex-direction:column;
+}
+.drawer.right{right:0; left:auto; border-radius:0; border-right:none;
+  border-left:1px solid var(--border); transform:translateX(105%)}
+.drawer.open{transform:translateX(0)}
+.drawer .head{display:flex; align-items:center; gap:8px; padding:16px 20px 8px}
+.drawer .head h2{font-size:22px; flex:1}
+.drawer .body{flex:1; overflow-y:auto; padding:4px 20px 22px}
+
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:5px}
+.chip{font-size:12px; padding:4px 11px; border-radius:2px; border:1px solid var(--border);
+  background:rgba(147,112,255,.1); color:#c9befc}
+.chip.long{border-radius:2px}
+.chip.loc{background:rgba(125,211,252,.12); color:#a5e3fc; border-color:rgba(125,211,252,.3)}
+.sect{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--faint); margin:16px 0 3px}
+
+.det-img{width:100%; border-radius:2px; box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.det-title{font-family:Georgia,serif; font-size:26px; margin-top:10px}
+.det-date{color:var(--faint); font-size:12px; margin:2px 0 8px}
+.det-summary{font-style:italic; color:#c4bbea; line-height:1.6; border-left:2px solid var(--accent);
+  padding-left:12px; margin:8px 0}
+.det-text{white-space:pre-wrap; line-height:1.6; color:var(--dim); font-size:13.5px; margin-top:4px}
+.link-row{display:flex; align-items:baseline; gap:7px; padding:7px 9px; border-radius:2px; cursor:pointer}
+.link-row:hover{background:rgba(147,112,255,.1)}
+.link-row .lt{font-size:11px; padding:2px 9px; border-radius:2px; flex-shrink:0}
+.link-row .lr{font-size:12px; color:var(--faint)}
+.link-row .del{margin-left:auto; color:var(--danger); opacity:.6; cursor:pointer}
+.link-row .del:hover{opacity:1}
+
+.dream-card{display:flex; gap:11px; padding:11px; margin-bottom:8px; border-radius:2px; cursor:pointer;
+  border:1px solid transparent; background:rgba(255,255,255,.03)}
+.dream-card:hover{border-color:var(--border-bright); background:rgba(147,112,255,.08)}
+.dream-card img,.dream-card .noimg{width:54px; height:54px; border-radius:2px; object-fit:cover; flex-shrink:0;
+  background:radial-gradient(circle at 30% 30%,#2b2158,#120d2a);
+  display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--dim)}
+.dream-card .t{font-weight:700; font-size:14px}
+.dream-card .d{font-size:11px; color:var(--faint)}
+.dream-card .s{font-size:12px; color:var(--dim); margin-top:2px; line-height:1.4;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+
+.overlay{position:fixed; inset:0; z-index:40; background:rgba(4,2,12,.72);
+  display:none; align-items:center; justify-content:center}
+.overlay.open{display:flex}
+.modal{width:520px; max-width:92vw; max-height:88vh; overflow-y:auto;
+  background:linear-gradient(160deg,#1c1540,#0f0b24); border:1px solid var(--border-bright);
+  border-radius:2px; padding:26px 28px; box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.modal h2{font-size:24px; margin-bottom:4px}
+.modal .note{font-size:12.5px; color:var(--dim); line-height:1.5}
+.mrow{display:flex; gap:9px; justify-content:flex-end; margin-top:20px}
+
+#legend{position:fixed; left:16px; bottom:14px; z-index:10; display:flex; gap:13px; flex-wrap:wrap;
+  background:var(--panel); border:1px solid var(--border); border-radius:2px;
+  padding:9px 14px; font-size:12px; color:var(--dim);}
+#legend .dot{display:inline-block; width:15px; height:3px; border-radius:2px; vertical-align:middle; margin-right:5px}
+
+/* чёрная дыра — страж угла */
+#blackHole{position:fixed; right:26px; bottom:26px; width:64px; height:64px; z-index:15;
+  pointer-events:none; filter:drop-shadow(0 0 18px rgba(147,112,255,.35))}
+#blackHole.feeding .bh-ring{animation:bhspin .5s linear infinite}
+#blackHole.feeding{transform:scale(1.35); transition:transform .25s}
+#blackHole:not(.feeding){transform:scale(1); transition:transform .8s}
+#blackHole .bh-core{position:absolute; inset:14px; border-radius:50%; background:#000;
+  box-shadow:0 0 22px 4px rgba(0,0,0,.9), inset 0 0 8px rgba(120,90,220,.35)}
+/* кольцо стоит спокойно и закручивается, только когда дыра глотает дар */
+#blackHole .bh-ring{position:absolute; inset:0; border-radius:50%;
+  background:conic-gradient(from 0deg, rgba(167,139,250,.0), rgba(167,139,250,.75),
+    rgba(125,211,252,.55), rgba(167,139,250,.0));
+  -webkit-mask:radial-gradient(circle, transparent 46%, #000 52%, #000 68%, transparent 74%);
+  mask:radial-gradient(circle, transparent 46%, #000 52%, #000 68%, transparent 74%)}
+@keyframes bhspin{to{transform:rotate(360deg)}}
+
+.toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%); z-index:60;
+  background:var(--panel-solid); border:1px solid var(--border-bright); border-radius:2px;
+  padding:11px 20px; box-shadow:0 10px 40px rgba(0,0,0,.5); font-size:13.5px; display:none; max-width:640px}
+
+#empty{position:fixed; inset:0; z-index:5; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:16px; text-align:center; pointer-events:none}
+#empty .big{font-family:Georgia,serif; font-style:italic; font-size:38px; color:#b6a9e8;
+  text-shadow:0 0 30px rgba(147,112,255,.4)}
+#empty .sub{color:var(--dim); max-width:420px; line-height:1.6; font-size:14px}
+#empty button{pointer-events:auto}
+
+/* страница входа и импорта */
+.center-page{position:fixed; inset:0; z-index:5; display:flex; align-items:center; justify-content:center; overflow-y:auto}
+.card{width:420px; max-width:92vw; background:linear-gradient(160deg,rgba(28,21,64,.92),rgba(15,11,36,.95));
+  border:1px solid var(--border-bright); border-radius:2px; padding:30px 32px;
+  box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.card h1{font-size:26px; text-align:center; margin-bottom:4px}
+.card .sub{color:var(--dim); font-size:13px; text-align:center; margin-bottom:10px}
+.tabbtns{display:flex; gap:8px; margin:14px 0 4px}
+.tabbtns button{flex:1}
+.tabbtns button.on{border-color:#8b7cf8; background:linear-gradient(135deg,#6d5bd0,#4f46a3)}
+
+/* админ */
+#dreamers{position:fixed; right:16px; top:70px; z-index:10; width:230px; max-height:60vh; overflow-y:auto;
+  background:var(--panel); border:1px solid var(--border); border-radius:2px; padding:10px;}
+#dreamers .u{padding:8px 10px; border-radius:2px; cursor:pointer; display:flex; justify-content:space-between}
+#dreamers .u:hover,#dreamers .u.on{background:rgba(147,112,255,.15)}
+#dreamers .n{color:var(--faint); font-size:12px}
+#linkbar{position:fixed; top:64px; left:50%; transform:translateX(-50%); z-index:30; display:none;
+  background:#2a1f5c; border:1px solid #8b7cf8; border-radius:2px; padding:10px 18px; font-size:13.5px}
+
+/* библиотека */
+.shelves{display:flex; flex-wrap:wrap; gap:0 22px; justify-content:center}
+.bookslot{display:flex; flex-direction:column; margin-top:22px}
+.bookcard{
+  width:150px; height:180px; cursor:pointer; border-radius:2px;
+  border:1px solid #8b7cf8; border-left-width:3px;
+  background:linear-gradient(135deg,#332764,#1a1338);
+  box-shadow:0 8px 22px rgba(0,0,0,.5);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:12px; text-align:center; transition:.2s;
+}
+.bookcard:hover{transform:translateY(-5px); box-shadow:0 14px 30px rgba(147,112,255,.35)}
+.bookcard .bicon{font-size:30px; color:#cabefc}
+.bookcard .btitle{font-size:13px; margin-top:9px; color:var(--text); line-height:1.35}
+.bookcard .bsub{font-size:10.5px; margin-top:7px; color:var(--faint)}
+.bookcard .bsub:first-letter{}
+.plank{height:7px; margin:0 -8px; border-radius:2px; background:linear-gradient(180deg,#2a1f5c,#1a1338);
+  box-shadow:0 3px 8px rgba(0,0,0,.5)}
+.hiero-text{white-space:pre-wrap; font-size:17px; line-height:1.7; color:var(--text);
+  font-family:'Segoe UI Historic','Noto Sans Egyptian Hieroglyphs','Segoe UI',sans-serif}
+.hiero-text .hi{font-size:1.75em; line-height:1.15; vertical-align:middle}
+
+.u-row{display:grid; grid-template-columns:1fr 130px 56px auto auto auto auto; gap:7px; align-items:center;
+  padding:7px 0; border-bottom:1px solid var(--border)}
+.u-row .n{color:var(--faint); font-size:12.5px; text-align:center}
+.u-row.banned input{opacity:.45; text-decoration:line-through}
+.u-row select{padding:7px 9px}
+.u-row button{padding:7px 10px}
+
+/* иероглифы: браузеру нужен явный шрифт, иначе тофу-квадрат */
+.hiero { font-family: 'Segoe UI Historic', 'Noto Sans Egyptian Hieroglyphs', sans-serif; }
+
+/* бейдж «кто я»: логин + роль словом в цвете ранга */
+.who { display:inline-flex; align-items:center; gap:8px; margin-left:12px; padding:4px 12px;
+  border:1px solid #6d5fb0; border-radius:2px; background:rgba(38,28,82,.4);
+  color:#e6e0ff; font-size:13px; font-weight:600; }
+.who i { font-style:normal; font-size:12px; }
+.who .r-owner { color:#fcd34d } .who .r-admin { color:#c084fc }
+.who .r-moder { color:#7dd3fc } .who .r-user { color:#a5b4fc }
+
+/* окно работы над сном: пульсация текущего шага */
+@keyframes pmarkPulse { 0%,100% { opacity:.35 } 50% { opacity:1 } }
+.pmark.pulse { animation: pmarkPulse 1.1s ease-in-out infinite; }
+
+/* обложка PDF на полке: первая страница книги, заголовок белым на затемнении снизу */
+.bookcard.cover{
+  padding:0; overflow:hidden; justify-content:flex-end; align-items:stretch;
+  background-size:cover; background-position:top center; background-repeat:no-repeat;
+}
+.bookcard.cover .covertitle{
+  width:100%; padding:22px 8px 9px; font-size:11px; line-height:1.3; color:#fff;
+  text-align:center; box-sizing:border-box;
+  background:linear-gradient(180deg, rgba(10,8,20,0), rgba(10,8,20,.85));
+  max-height:60px; overflow:hidden;
+}
+
+/* галочка «запомнить это устройство» на входе */
+label.remember {
+  display:flex; align-items:center; gap:9px; margin:14px 0 4px;
+  font-size:13px; letter-spacing:0; text-transform:none; cursor:pointer;
+  color:var(--dim); font-weight:400;
+}
+label.remember input { width:17px; height:17px; margin:0; accent-color:#8b7cf8; cursor:pointer; }
+
+/* отбор вещей в библиотеке: уголок с галочкой и подсветка выбранного */
+.bookcard { position: relative; }
+.bookcard .pickmark {
+  position:absolute; top:6px; left:6px; width:20px; height:20px; border-radius:2px;
+  border:1px solid var(--border); background:rgba(10,8,20,.6);
+  color:#8fd8b8; font-size:13px; line-height:19px; text-align:center;
+}
+.bookcard.picked { outline:2px solid #8fd8b8; outline-offset:-2px; }
+
+/* папки: стоят на полке рядом с книгами, с язычком как у настоящей папки */
+.foldercard{
+  width:150px; height:180px; cursor:pointer; position:relative;
+  border-radius:2px; margin-top:14px;
+  border:1px solid #b9975a; border-top-width:2px;
+  background:linear-gradient(160deg,#4a3b22,#241a34 70%,#1a1338);
+  box-shadow:0 8px 22px rgba(0,0,0,.5);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:12px; text-align:center; transition:.2s;
+}
+.foldercard::before{  /* язычок */
+  content:''; position:absolute; top:-13px; left:-1px; width:62px; height:14px;
+  border:1px solid #b9975a; border-bottom:none; border-radius:2px 0 0;
+  background:linear-gradient(180deg,#57462a,#4a3b22);
+}
+.foldercard:hover{transform:translateY(-5px); box-shadow:0 14px 30px rgba(252,211,77,.25)}
+.foldercard .bicon{font-size:34px; color:#fcd34d; text-shadow:0 0 18px rgba(252,211,77,.4)}
+.foldercard .btitle{font-size:13px; margin-top:9px; color:var(--text); line-height:1.35}
+.foldercard .bsub{font-size:10.5px; margin-top:7px; color:var(--faint)}
+.foldercard.back{border-color:#6d5fb0; background:linear-gradient(160deg,#2b2352,#161030)}
+.foldercard.back::before{display:none}
+.foldercard.back .bicon{color:#a99ef0; text-shadow:none}
+
+/* шапка открытой папки над полкой */
+.folderhead{display:flex; align-items:center; gap:8px; margin:0 0 6px;
+  padding:9px 14px; border:1px solid #b9975a55; border-radius:2px;
+  background:linear-gradient(90deg,rgba(74,59,34,.5),rgba(26,19,56,.4))}
+.folderhead b{color:#fcd34d; font-weight:600; font-size:14.5px}
+.folderhead .n{color:var(--faint); font-size:12px}
+
+/* глаз в легенде — переключатель нитей */
+#legend #linksEye{cursor:pointer; user-select:none; padding:1px 8px 2px; border-radius:2px;
+  border:1px solid #73aa96ff; background:#40251c52; transition:opacity .15s, border-color .15s}
+#legend #linksEye:hover{border-color:#a5b4fc}
+#legend #linksEye.off{opacity:.55; border-color:#2e9682ff; background:#2214102e}

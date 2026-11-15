@@ -1,0 +1,145 @@
+/* Пасьянс Медичи: тёмно-красное окно, неоновый красный текст, оранжевая рамка-муравьи
+   (как MediciWindow.xaml). Окно 1060×660, три колонки: карты 360, цель/зависшее 210, расчёт. */
+.oracle-win.medici {
+  --o-bg: #160808; --o-fg: #FF4D4D; --o-muted: #FF9A7A; --o-border: #7A1C1C; --o-ants: #FF8C2B;
+  --o-btn-border: #FF4D4D; --o-btn-hover: #3A1212; --o-font: Consolas, 'Cascadia Mono', monospace;
+  --md-panel: #1A0B0B; --md-hint: #B06A55; --md-legend: #8A5A4A; --md-inner: #5A1616;
+  --md-orange: #FF8C2B; --md-btn-bg: #240C0C;
+}
+.oracle-win.medici .oracle-ants { opacity: .7; }
+
+/* шапка */
+.oracle-win.medici .oracle-bar { background: var(--md-panel); border-bottom-color: var(--o-border); }
+.oracle-win.medici .oracle-bar .ob-title { color: var(--o-muted); font-size: 12px; }
+.oracle-win.medici .oracle-bar .ob-sub { color: var(--o-fg); opacity: 1; font-size: 11px; }
+.oracle-win.medici .oracle-bar .ob-btns button {
+  width: 36px; height: 24px; margin-left: 4px; font-size: 12px; padding: 0;
+  background: var(--md-panel); color: var(--o-fg); border: 1px solid var(--o-border); border-radius: 0;
+}
+
+/* раскладка */
+.oracle-win.medici .oracle-body { padding: 12px; }
+.md-grid {
+  display: grid; grid-template-columns: 360px 210px minmax(0, 1fr); gap: 12px;
+  height: 100%; min-height: 0;
+}
+.md-panel {
+  display: flex; flex-direction: column; min-height: 0; min-width: 0; box-sizing: border-box;
+  background: var(--md-panel); border: 1px solid var(--o-border); border-radius: 3px; padding: 8px;
+}
+.md-head { color: var(--o-muted); font-size: 12px; margin: 0 0 2px 2px; }
+.md-head-calc { margin-bottom: 6px; }
+.md-hint { color: var(--md-hint); font-size: 11px; margin: 0 0 6px 2px; }
+.md-hint-small { font-size: 10px; margin-bottom: 4px; }
+
+/* карты */
+.md-cards-scroll { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+.md-cards { display: grid; grid-template-columns: repeat(4, 1fr); justify-items: center; }
+.md-card {
+  position: relative; box-sizing: border-box; width: 50px; height: 70px; margin: 4px;
+  border-radius: 5px; background: #F2ECDD; border: 1px solid #7A1C1C; color: #1A1414;
+  cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+.md-card.red { color: #C6402F; }
+.md-card:hover { box-shadow: 0 0 6px rgba(255, 77, 77, .6); }
+.md-corner {
+  position: absolute; left: 4px; top: 2px; display: flex; flex-direction: column; align-items: center;
+  line-height: 1;
+}
+.md-corner .md-r { font: bold 12px 'Segoe UI', system-ui, sans-serif; }
+.md-corner .md-s { font: 11px 'Segoe UI Symbol', 'Segoe UI', sans-serif; margin-top: -1px; }
+.md-pip {
+  position: absolute; inset: 0; box-sizing: border-box; padding-top: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font: 26px 'Segoe UI Symbol', 'Segoe UI', sans-serif; line-height: 1;
+}
+
+/* цель и зависшее */
+.md-stacks { display: grid; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; min-height: 0; }
+.md-list {
+  flex: 1; min-height: 0; overflow-y: auto; color: var(--o-fg); font-size: 14px;
+  user-select: none; -webkit-user-select: none; touch-action: manipulation;
+}
+.md-item { padding: 1px 4px; cursor: default; }
+.md-item:hover { background: rgba(255, 77, 77, .08); }
+.md-item.sel { background: #3A1212; outline: 1px solid var(--o-border); }
+
+/* расчёт цепочки */
+.md-calc { overflow-y: auto; }
+.md-block { border: 1px solid var(--md-inner); border-radius: 3px; padding: 4px 8px; margin-bottom: 8px; }
+.md-sub { color: var(--md-orange); font-size: 11px; margin-bottom: 2px; }
+.md-sub.dim { opacity: .4; }
+.md-purposes { margin-bottom: 4px; }
+.md-legend { color: var(--md-legend); font-size: 10px; margin: 0 0 6px; }
+.md-row { display: flex; flex-wrap: wrap; margin-bottom: 6px; }
+.oracle-win.medici .md-radio, .oracle-win.medici .md-check {
+  display: flex; align-items: flex-start; gap: 5px; margin: 2px 14px 2px 0;
+  color: var(--o-muted); font-size: 12px; cursor: pointer; line-height: 1.35;
+}
+.md-radio input, .md-check input { accent-color: var(--o-fg); margin: 1px 0 0; flex: 0 0 auto; cursor: pointer; }
+.md-rules.off { opacity: .45; }
+.md-rules.off .md-check { cursor: default; }
+
+.md-actions { display: flex; flex-wrap: wrap; align-items: center; row-gap: 6px; margin-bottom: 8px; }
+.md-shuffle-label { color: var(--o-muted); font-size: 14px; }
+.oracle-win.medici input.md-shuffle {
+  width: 50px; box-sizing: border-box; margin: 0 10px 0 6px; padding: 4px 6px;
+  background: var(--md-panel); color: var(--o-fg); border: 1px solid var(--o-border);
+  caret-color: var(--o-fg); font-size: 14px;
+}
+.oracle-win.medici .md-panel button {
+  background: var(--md-btn-bg); color: var(--o-fg); border: 1px solid var(--o-fg);
+  font-size: 14px; padding: 4px 8px; cursor: pointer;
+}
+.oracle-win.medici .md-panel button:hover,
+.oracle-win.medici .md-msg-btns button:hover { background: var(--o-btn-hover); }
+.md-actions .md-gap { margin-right: 8px; }
+.md-actions .md-gap-left { margin-left: 12px; }
+.oracle-win.medici .md-panel button.md-emoji { font-family: 'Segoe UI', 'Segoe UI Emoji', sans-serif; }
+.md-counter { margin-left: 12px; color: var(--o-muted); font-size: 14px; }
+
+.oracle-win.medici textarea.md-log {
+  flex: 1; min-height: 120px; width: 100%; box-sizing: border-box; resize: none;
+  background: var(--md-panel); color: var(--o-fg); border: 0; padding: 6px;
+  font-size: 14px; line-height: 1.4; caret-color: var(--o-fg); white-space: pre-wrap;
+}
+
+/* сообщение поверх окна */
+.md-msg-shade {
+  position: absolute; inset: 32px 0 0 0; z-index: 5; padding: 12px; box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center; background: rgba(10, 2, 2, .62);
+}
+.md-msg-box {
+  display: flex; flex-direction: column; width: 560px; max-width: 100%; max-height: 100%;
+  background: var(--md-panel); border: 1px solid var(--o-fg); box-shadow: 0 0 18px rgba(255, 77, 77, .35);
+}
+.md-msg-cap {
+  display: flex; align-items: center; gap: 8px; padding: 6px 10px;
+  border-bottom: 1px solid var(--o-border); color: var(--o-muted); font-size: 12px;
+}
+.md-msg-icon { color: var(--o-muted); }
+.md-warning .md-msg-icon { color: var(--md-orange); }
+.md-error .md-msg-icon { color: var(--o-fg); }
+.md-msg-text {
+  flex: 1; min-height: 0; overflow: auto; padding: 10px; white-space: pre-wrap;
+  color: var(--o-fg); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere;
+}
+.md-msg-btns { padding: 8px 10px; text-align: right; border-top: 1px solid var(--md-inner); }
+.oracle-win.medici .md-msg-btns button {
+  background: var(--md-btn-bg); color: var(--o-fg); border: 1px solid var(--o-fg);
+  font-size: 14px; padding: 4px 18px;
+}
+
+/* узкое окно и телефон: колонки друг под другом, окно на весь экран (oracles.css) */
+@media (max-width: 760px) {
+  .md-grid { grid-template-columns: minmax(0, 1fr); height: auto; }
+  .md-cards-scroll { max-height: 46vh; }
+  .md-cards { grid-template-columns: repeat(auto-fill, minmax(58px, 1fr)); }
+  .md-stacks { grid-template-rows: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .md-stack { height: 170px; }
+  .md-calc { overflow: visible; }
+  .oracle-win.medici textarea.md-log { flex: none; min-height: 240px; }
+  .md-actions .md-gap-left { margin-left: 0; }
+  .md-msg-shade { padding: 8px; }
+}
